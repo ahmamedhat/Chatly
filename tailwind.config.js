@@ -14,7 +14,17 @@ module.exports = {
         lg: "1200px",
         xl: "1536px",
       },
+      colors: {
+        icon: "white",
+        primaryMessage: "#218aff",
+        secondaryMessage: "#d8d8d8",
+        green: "#39ff5a",
+      },
+      maxWidth: {
+        contained: "120rem",
+      },
     },
   },
+  darkMode: "class",
   plugins: [],
 };
