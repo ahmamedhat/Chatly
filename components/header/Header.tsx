@@ -25,13 +25,13 @@ const Header: React.FC<IHeader> = ({ appName }) => {
       return currentTheme === "dark" ? (
         <MdOutlineLightMode
           size={IconsSizes.md}
-          className="fill-white hover:fill-primaryMessage cursor-pointer"
+          className="fill-white hover:fill-primaryMessage cursor-pointer select-none"
           onClick={() => setTheme("light")}
         />
       ) : (
         <MdDarkMode
           size={IconsSizes.md}
-          className="fill-black hover:fill-primaryMessage cursor-pointer"
+          className="fill-black hover:fill-primaryMessage cursor-pointer select-none"
           onClick={() => setTheme("dark")}
         />
       );
