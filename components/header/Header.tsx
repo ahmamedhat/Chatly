@@ -15,7 +15,7 @@ const Header: React.FC<IHeader> = ({ appName }) => {
     setMounted(true);
   }, []);
 
-  const renderThemeChanger = () => {
+  const RenderThemeChanger = () => {
     const { theme, setTheme, systemTheme } = useTheme();
     const currentTheme = theme === "system" ? systemTheme : theme;
 
@@ -49,7 +49,7 @@ const Header: React.FC<IHeader> = ({ appName }) => {
             <p className="text-sm font-thin">ABOUT</p>
           </Link>
 
-          {renderThemeChanger()}
+          {RenderThemeChanger()}
         </div>
       </div>
     </div>
