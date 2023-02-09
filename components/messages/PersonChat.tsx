@@ -9,10 +9,11 @@ const PersonChat: React.FC<PersonChatMessage> = ({
   name,
   time,
   image,
+  chatID,
 }) => {
   return (
-    <Link href={"/chat"} key={id}>
-      <div className="w-full bg-white dark:bg-black h-20 border border-t-0 border-b-[0.5px] border-gray-200 dark:border-gray-800 py-2 border-x-0 flex items-center">
+    <Link href={"/chat?chatId=" + chatID} key={id}>
+      <div className="w-full bg-white dark:bg-dark h-20 border border-t-0 border-b-[0.5px] border-gray-200 dark:border-gray-800 py-2 border-x-0 flex items-center">
         <div className="w-[20%] items-center flex justify-center mr-2">
           <Image
             src={image}
@@ -26,7 +27,9 @@ const PersonChat: React.FC<PersonChatMessage> = ({
         </div>
         <div className="w-[80%]">
           <div className="flex justify-between">
-            <p className="font-semibold">{name}</p>
+            <p className="font-semibold text-offBlack dark:text-white">
+              {name}
+            </p>
             <p className="text-gray-400 text-xs">{time}</p>
           </div>
           <div className="flex justify-between">

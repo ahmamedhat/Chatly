@@ -1,6 +1,6 @@
 "use client";
 
-import { FaFacebook, FaTwitter, FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import { IconsSizes } from "@/lib/constants";
 

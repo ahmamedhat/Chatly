@@ -15,7 +15,7 @@ const ChatMessage: React.FC<IChatMessage> = ({
 }) => {
   return (
     <div
-      key={id}
+      key={id + receiverId}
       className={`chat ${
         senderId === currentUserId ? "chat-end" : "chat-start"
       } `}
