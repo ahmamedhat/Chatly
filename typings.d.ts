@@ -4,4 +4,13 @@ export type PersonChatMessage = {
   name: string;
   time: string;
   image: string;
+  chatID: number;
+};
+
+export type ChatMessage = {
+  id: number;
+  senderId: number;
+  receiverId: number;
+  message: string;
+  time: string;
 };
