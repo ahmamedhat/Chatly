@@ -1,8 +1,6 @@
-import { IconsSizes } from "@/lib/constants";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { MdOutlineLightMode, MdDarkMode } from "react-icons/md";
+import LightDarkSwitch from "./LightDarkSwitch";
 
 export interface IHeader {
   appName: string;
@@ -16,31 +14,13 @@ const Header: React.FC<IHeader> = ({ appName }) => {
   }, []);
 
   const RenderThemeChanger = () => {
-    const { theme, setTheme, systemTheme } = useTheme();
-    const currentTheme = theme === "system" ? systemTheme : theme;
-
     if (!mounted) return null;
-
-    {
-      return currentTheme === "dark" ? (
-        <MdOutlineLightMode
-          size={IconsSizes.md}
-          className="fill-white hover:fill-primaryMessage cursor-pointer select-none"
-          onClick={() => setTheme("light")}
-        />
-      ) : (
-        <MdDarkMode
-          size={IconsSizes.md}
-          className="fill-black hover:fill-primaryMessage cursor-pointer select-none"
-          onClick={() => setTheme("dark")}
-        />
-      );
-    }
+    return <LightDarkSwitch />;
   };
 
   return (
-    <div className="bg-white dark:bg-black text-black dark:text-white p-4">
-      <div className="flex flex-row justify-between max-w-contained m-auto">
+    <div className="bg-white dark:bg-dark text-black dark:text-white p-4 h-[8vh]">
+      <div className="flex flex-row justify-between max-w-contained m-auto items-center">
         <Link href={"/"}>
           <p className="font-bold text-lg">{appName}</p>
         </Link>
