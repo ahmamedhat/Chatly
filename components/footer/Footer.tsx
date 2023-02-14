@@ -7,7 +7,7 @@ import { IconsSizes } from "@/lib/constants";
 export default function Footer() {
   return (
     <div className="bg-white dark:bg-dark">
-      <footer className="footer footer-center p-10 text-base-content rounded bg-white dark:bg-dark">
+      <footer className="footer footer-center p-10 text-gray-400 dark:text-secondaryMessage rounded bg-white dark:bg-dark">
         <div className="grid grid-flow-col gap-4">
           <Link href={"/about"}>
             <p className="link link-hover">About us</p>

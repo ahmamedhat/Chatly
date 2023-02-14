@@ -28,7 +28,7 @@ export default function RootLayout({
       <body className="bg-white dark:bg-dark min-h-screen flex flex-col">
         {mounted && (
           <ThemeProvider enableSystem={true} attribute="class">
-            <Header appName="C H A T L Y" />
+            {path !== "/chat" && <Header appName="C H A T L Y" />}
             <main className="px-4">{children}</main>
             <div className="m-auto" />
             {path !== "/chat" && <Footer />}
