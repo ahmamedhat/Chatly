@@ -14,3 +14,9 @@ export type ChatMessage = {
   message: string;
   time: string;
 };
+
+export type user = {
+  id: number;
+  name: string;
+  email: string;
+};

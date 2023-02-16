@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { Providers } from "@/lib/redux/provider";
 
 export default function RootLayout({
   children,
@@ -20,20 +21,18 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
       <head />
       <body className="bg-white dark:bg-dark min-h-screen flex flex-col">
-        {mounted && (
-          <ThemeProvider enableSystem={true} attribute="class">
-            {path !== "/chat" && <Header appName="C H A T L Y" />}
-            <main className="px-4">{children}</main>
-            <div className="m-auto" />
-            {path !== "/chat" && <Footer />}
-          </ThemeProvider>
-        )}
+        <Providers>
+          {mounted && (
+            <ThemeProvider enableSystem={true} attribute="class">
+              {path !== "/chat" && <Header appName="C H A T L Y" />}
+              <main className="px-4">{children}</main>
+              <div className="m-auto" />
+              {path !== "/chat" && <Footer />}
+            </ThemeProvider>
+          )}
+        </Providers>
       </body>
     </html>
   );
