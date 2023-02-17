@@ -1,42 +1,45 @@
 "use client";
 
-import { PersonChat } from "@/components";
-import { Chats } from "@/lib/constants";
-import { useEffect } from "react";
-import { io } from "socket.io-client";
+import Google from "@/components/icons/Google";
+import { IconsSizes } from "@/lib/constants";
+import { RootState } from "@/lib/redux/store";
+import { useEffect, useState } from "react";
+import { FaFacebook } from "react-icons/fa";
+import { BiLogOut } from "react-icons/bi";
+import { signOut, useSession, signIn, getSession } from "next-auth/react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const socket = io("http://localhost:4000");
+  const dispatch = useDispatch();
+  const { data: session } = useSession();
+  const router = useRouter();
 
-  useEffect(() => {
-    socket.on("connect", () => {
-      console.log("you connected app with socket id: ", socket.id);
-    });
-    socket.on("receive-message", (socket) => {
-      console.log("app socket message is", socket);
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   return (
-    <div className="bg-white dark:bg-dark py-2">
-      <div className="max-w-[50rem] mx-auto">
-        <h2 className="font-bold text-lg mb-4 text-offBlack dark:text-white">
-          Messages
-        </h2>
-        {Chats.map((chat) => {
-          return (
-            <PersonChat
-              key={chat.id}
-              name={chat.name}
-              id={chat.id}
-              message={chat.message}
-              time={chat.time}
-              image={chat.image}
-              chatID={chat.chatID}
-            />
-          );
-        })}
-      </div>
+    <div className="bg-white dark:bg-dark space-y-4 py-2 flex flex-col justify-center items-center h-screen">
+      {session?.user ? (
+        <>
+          <p>Welcome Back</p>
+          <p>{session?.user?.name}</p>
+          <button
+            onClick={() => signOut()}
+            className="btn gap-2 bg-white dark:bg-dark text-black dark:text-secondaryMessage font-light hover:text-white"
+          >
+            <BiLogOut size={IconsSizes.md} className="fill-primaryMessage" />
+            logout
+          </button>
+        </>
+      ) : (
+        <button
+          onClick={() => signIn("google")}
+          className="btn gap-2 bg-white dark:bg-dark text-black dark:text-secondaryMessage font-light hover:text-white"
+        >
+          <Google width={IconsSizes.md} height={IconsSizes.md} />
+          Sign in with Google
+        </button>
+      )}
     </div>
   );
 }

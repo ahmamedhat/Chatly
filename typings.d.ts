@@ -15,8 +15,13 @@ export type ChatMessage = {
   time: string;
 };
 
-export type user = {
+export type User = {
   id: number;
   name: string;
   email: string;
+};
+
+export type Icon = {
+  height: string;
+  width: string;
 };
