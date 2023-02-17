@@ -1,20 +1,20 @@
-import { user } from "@/typings";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { User } from "@/typings";
+import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
   user: {
-    id: 4,
+    id: 2,
     name: "Meto",
     email: "ahmadmed7at77@gmail.com",
-  } as user,
+  } as User,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<user>) {
+    setUser(state, action: PayloadAction<User>) {
       state.user = action.payload;
     },
   },
