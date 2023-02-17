@@ -21,12 +21,12 @@ const Header: React.FC<IHeader> = ({ appName }) => {
   return (
     <div className="bg-white dark:bg-dark text-black dark:text-white p-4 h-[8vh] sm:h-[18vh]">
       <div className="flex flex-row justify-between max-w-[50rem] mx-auto items-center">
-        <Link href={"/"}>
+        <Link href={"/messages"}>
           <p className="font-bold text-lg">{appName}</p>
         </Link>
         <div className="flex flex-row space-x-4 items-center">
           <Link href={"/about"}>
-            <p className="text-sm font-thin">ABOUT</p>
+            <p className="text-sm font-light">ABOUT</p>
           </Link>
 
           {RenderThemeChanger()}

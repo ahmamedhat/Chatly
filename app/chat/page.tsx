@@ -2,39 +2,35 @@
 
 import { ChatHeader, ChatMessage } from "@/components";
 import { ChatMessages, IconsSizes } from "@/lib/constants";
-import { useSearchParams } from "next/navigation";
+import { RootState } from "@/lib/redux/store";
+// import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { TbSend } from "react-icons/tb";
-import { io, Socket } from "socket.io-client";
+import { useSelector } from "react-redux";
 
 export default function Chat() {
   const [messageInput, setMessageInput] = useState("");
   const [chatMessages, setChatMessages] = useState(ChatMessages);
-  const [socket, setSocket] = useState<Socket>();
 
   const chatList = useRef<null | HTMLDivElement>(null);
 
-  const query = useSearchParams().get("chatId");
-
-  const user = {
-    name: "Ahmad",
-    id: 2,
-  };
-
-  socket?.on("receive-message", (message) => {
-    console.log("message in chat page socket is", message);
-    setChatMessages([...chatMessages, message]);
-    console.log("messages now are", chatMessages.length);
-  });
+  const user = useSelector((store: RootState) => store.user.user);
+  const socket = useSelector((store: RootState) => store.socket.socket);
+  // const query = useSearchParams().get("chatId");
 
   useEffect(() => {
-    console.log("query is", query);
-    const socketObj = io("http://localhost:4000");
-    setSocket(socketObj);
-    socketObj.on("connect", () => {
-      console.log("connected successsfully, chat", socketObj?.id);
+    socket.connect();
+    socket?.on("receive-message", (message) => {
+      console.log("message in chat page socket is", message);
+      setChatMessages([...chatMessages, message]);
+      console.log("messages now are", chatMessages.length);
     });
+
     chatList.current?.scrollIntoView({ behavior: "smooth" });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   const sendMessage = async () => {
@@ -48,6 +44,7 @@ export default function Chat() {
       time: Date().toString(),
       key: Date.now(),
     };
+    //Todo: will change room with the user to open a room with
     const room = "";
     setChatMessages([...chatMessages, newMessage]);
     socket?.emit("send-message", newMessage, room);

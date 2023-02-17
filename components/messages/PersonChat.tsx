@@ -28,9 +28,7 @@ const PersonChat: React.FC<PersonChatMessage> = ({
         </div>
         <div className="w-[80%] flex-1">
           <div className="flex justify-between">
-            <p className="font-semibold text-offBlack dark:text-white">
-              {name}
-            </p>
+            <p className="font-medium text-offBlack dark:text-white">{name}</p>
             <p className="text-gray-400 text-xs">{timeFormatter(time)}</p>
           </div>
           <div className="flex justify-between">
