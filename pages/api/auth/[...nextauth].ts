@@ -12,6 +12,11 @@ export const authOptions = {
     signIn: "/",
   },
   secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    async redirect({ baseUrl }: { baseUrl: string }) {
+      return baseUrl + "/messages";
+    },
+  },
 };
 
 export default NextAuth(authOptions);
