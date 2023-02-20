@@ -7,6 +7,13 @@ export type PersonChatMessage = {
   chatID: number;
 };
 
+export type PersonOnlineMessage = {
+  userID: string;
+  username: string;
+  email: string;
+  image?: string;
+};
+
 export type ChatMessage = {
   id: number;
   senderId: number;
@@ -19,6 +26,7 @@ export type User = {
   id: number;
   name: string;
   email: string;
+  image: string;
 };
 
 export type Icon = {
