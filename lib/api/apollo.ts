@@ -1,9 +1,4 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  gql,
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL + "graphql";
 

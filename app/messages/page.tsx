@@ -1,9 +1,12 @@
 "use client";
 
-import { PersonChat } from "@/components";
+import { PersonChat, PersonOnline } from "@/components";
 import { Chats } from "@/lib/constants";
 import { setSocket } from "@/lib/redux/reducers/socketSlice";
+import userSlice, { setUser } from "@/lib/redux/reducers/userSlice";
 import { RootState } from "@/lib/redux/store";
+import { getConnectedUsers, socketConnect } from "@/lib/socket/socket";
+import { PersonOnlineMessage } from "@/typings";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -12,65 +15,35 @@ import { io, Socket } from "socket.io-client";
 
 export default function Messages() {
   const dispatch = useDispatch();
-
   const user = useSelector((store: RootState) => store.user.user);
-  const socket = useSelector((store: RootState) => store.socket.socket);
   const [chats, setChats] = useState(Chats);
+  const [onlineUsers, setOnlineUsers] = useState<PersonOnlineMessage[]>([]);
+  const [loading, setLoading] = useState(false);
+  const apiURL = process.env.NEXT_PUBLIC_API_URL;
   const { data: session, status } = useSession();
 
-  const getConnectedUsers = (socket: Socket) => {
-    socket?.on("users", (users: any) => {
-      console.log("users connected are", users);
-
-      users.forEach((user: any) => {
-        user.self = user.userID === socket?.id;
-        // initReactiveProperties(user);
-      });
-      // put the current user first, and then sort by username
-      users = users.sort(
-        (
-          a: { self: any; username: number },
-          b: { self: any; username: number }
-        ) => {
-          if (a.self) return -1;
-          if (b.self) return 1;
-          if (a.username < b.username) return -1;
-          return a.username > b.username ? 1 : 0;
-        }
-      );
-    });
-  };
-
   useEffect(() => {
-    const socketObj = io("http://localhost:4000", { autoConnect: false });
-    socketObj.auth = { username: user.name };
-    socketObj.connect();
-    dispatch(setSocket(socketObj));
-    console.log("socket is", socket);
+    console.log("online users are", onlineUsers);
+    if (session?.user && !user?.email) {
+      dispatch(
+        setUser({
+          id: 0,
+          email: session?.user?.email as string,
+          image: session?.user?.image as string,
+          name: session?.user?.name as string,
+        })
+      );
+    } else if (session?.user && user.email) {
+      const socketObj = socketConnect(user);
+      dispatch(setSocket(socketObj));
+      getConnectedUsers(socketObj, (users) => setOnlineUsers(users));
 
-    socketObj?.on("connect", () => {
-      console.log("you connected app with socketObj? id: ", socketObj?.id);
-    });
-    socketObj?.on("new user connected", (user) => {
-      console.log("a new user has connected", user?.userID);
-    });
-    socketObj?.on("receive-message", (socketObj) => {
-      console.log("app socketObj? message is", socketObj);
-    });
-    socketObj.on("connect_error", (err) => {
-      if (err.message === "invalid username") {
-        console.log("invalid username");
-      }
-    });
-    getConnectedUsers(socketObj);
-
-    return () => {
-      console.log("socket? disconnected");
-      socketObj?.disconnect();
-    };
-  }, []);
-  if (status === "unauthenticated") {
-  }
+      return () => {
+        console.log("socket? disconnected");
+        socketObj?.disconnect();
+      };
+    }
+  }, [session?.user, user]);
 
   return (
     <div className="bg-white dark:bg-dark py-2">
@@ -88,6 +61,22 @@ export default function Messages() {
               time={chat.time}
               image={chat.image}
               chatID={chat.chatID}
+            />
+          );
+        })}
+      </div>
+      <div className="max-w-[50rem] mx-auto mt-4">
+        <h2 className="font-semibold text-lg mb-4 text-offBlack dark:text-white">
+          Online
+        </h2>
+        {onlineUsers.map((user) => {
+          return (
+            <PersonOnline
+              key={user.userID}
+              username={user.username}
+              image={user.image}
+              email={user.email}
+              userID={user.userID}
             />
           );
         })}

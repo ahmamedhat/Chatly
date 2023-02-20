@@ -2,20 +2,11 @@
 
 import Google from "@/components/icons/Google";
 import { IconsSizes } from "@/lib/constants";
-import { RootState } from "@/lib/redux/store";
-import { useEffect, useState } from "react";
-import { FaFacebook } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
 import { signOut, useSession, signIn, getSession } from "next-auth/react";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const dispatch = useDispatch();
   const { data: session } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {}, []);
 
   return (
     <div className="bg-white dark:bg-dark space-y-4 py-2 flex flex-col justify-center items-center h-screen">

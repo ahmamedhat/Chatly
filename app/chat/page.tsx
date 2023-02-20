@@ -2,11 +2,12 @@
 
 import { ChatHeader, ChatMessage } from "@/components";
 import { ChatMessages, IconsSizes } from "@/lib/constants";
+import { setSocket } from "@/lib/redux/reducers/socketSlice";
 import { RootState } from "@/lib/redux/store";
-// import { useSearchParams } from "next/navigation";
+import { socketConnect } from "@/lib/socket/socket";
 import React, { useEffect, useRef, useState } from "react";
 import { TbSend } from "react-icons/tb";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Chat() {
   const [messageInput, setMessageInput] = useState("");
@@ -14,23 +15,31 @@ export default function Chat() {
 
   const chatList = useRef<null | HTMLDivElement>(null);
 
+  const dispatch = useDispatch();
   const user = useSelector((store: RootState) => store.user.user);
   const socket = useSelector((store: RootState) => store.socket.socket);
-  // const query = useSearchParams().get("chatId");
 
   useEffect(() => {
-    socket.connect();
-    socket?.on("receive-message", (message) => {
-      console.log("message in chat page socket is", message);
-      setChatMessages([...chatMessages, message]);
-      console.log("messages now are", chatMessages.length);
-    });
+    console.log("user is", user);
+    console.log("socket is", socket);
+    if (!socket.auth) {
+      const socketObj = socketConnect(user);
+      dispatch(setSocket(socketObj));
+    } else {
+      console.log("socket is", socket);
 
-    chatList.current?.scrollIntoView({ behavior: "smooth" });
+      socket.connect();
+      socket?.on("receive-message", (message) => {
+        console.log("message in chat page socket is", message);
+        setChatMessages([...chatMessages, message]);
+        console.log("messages now are", chatMessages.length);
+      });
 
-    return () => {
-      socket.disconnect();
-    };
+      chatList.current?.scrollIntoView({ behavior: "smooth" });
+      return () => {
+        socket.disconnect();
+      };
+    }
   }, []);
 
   const sendMessage = async () => {
