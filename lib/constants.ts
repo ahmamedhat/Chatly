@@ -3,6 +3,7 @@ export enum IconsSizes {
   md = "26",
   lg = "30",
   xl = "34",
+  xxl = "38",
 }
 
 export enum Colors {

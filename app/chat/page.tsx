@@ -20,14 +20,10 @@ export default function Chat() {
   const socket = useSelector((store: RootState) => store.socket.socket);
 
   useEffect(() => {
-    console.log("user is", user);
-    console.log("socket is", socket);
     if (!socket.auth) {
       const socketObj = socketConnect(user);
       dispatch(setSocket(socketObj));
     } else {
-      console.log("socket is", socket);
-
       socket.connect();
       socket?.on("receive-message", (message) => {
         console.log("message in chat page socket is", message);

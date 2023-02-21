@@ -3,6 +3,28 @@ import { io, Socket } from "socket.io-client";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
+const parseUsers = (socket: Socket, users: []) => {
+  users.forEach((user: any) => {
+    user.self = user.userID === socket?.id;
+    // initReactiveProperties(user);
+  });
+  // put the current user first, and then sort by username
+  users = users.sort(
+    (
+      a: { self: boolean; username: string },
+      b: { self: boolean; username: string }
+    ) => {
+      if (a.self) return -1;
+      if (b.self) return 1;
+      if (a.username < b.username) return -1;
+      return a.username > b.username ? 1 : 0;
+    }
+  );
+  //Remove logged in user: will be handled more efficiently in the near future
+  const filtered = users.filter((user: any) => !user.self);
+  return filtered as [];
+};
+
 export function socketConnect(user: User) {
   const socket = io(apiURL as string, { autoConnect: false });
 
@@ -35,24 +57,11 @@ export function getConnectedUsers(
   callback: (users: []) => void
 ) {
   socket?.on("users", (users: []) => {
-    console.log("users connected are", users);
-    users.forEach((user: any) => {
-      user.self = user.userID === socket?.id;
-      // initReactiveProperties(user);
-    });
-    // put the current user first, and then sort by username
-    users = users.sort(
-      (
-        a: { self: boolean; username: string },
-        b: { self: boolean; username: string }
-      ) => {
-        if (a.self) return -1;
-        if (b.self) return 1;
-        if (a.username < b.username) return -1;
-        return a.username > b.username ? 1 : 0;
-      }
-    );
-
-    callback(users);
+    const newUsers = parseUsers(socket, users);
+    callback(newUsers);
   });
+}
+
+export function disconnectSocket(socket: Socket) {
+  socket?.disconnect();
 }

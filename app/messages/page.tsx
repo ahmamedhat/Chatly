@@ -1,17 +1,15 @@
 "use client";
 
-import { PersonChat, PersonOnline } from "@/components";
+import { EmptyMessages, PersonChat, PersonOnline } from "@/components";
 import { Chats } from "@/lib/constants";
 import { setSocket } from "@/lib/redux/reducers/socketSlice";
-import userSlice, { setUser } from "@/lib/redux/reducers/userSlice";
+import { setUser } from "@/lib/redux/reducers/userSlice";
 import { RootState } from "@/lib/redux/store";
 import { getConnectedUsers, socketConnect } from "@/lib/socket/socket";
 import { PersonOnlineMessage } from "@/typings";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { io, Socket } from "socket.io-client";
 
 export default function Messages() {
   const dispatch = useDispatch();
@@ -19,8 +17,7 @@ export default function Messages() {
   const [chats, setChats] = useState(Chats);
   const [onlineUsers, setOnlineUsers] = useState<PersonOnlineMessage[]>([]);
   const [loading, setLoading] = useState(false);
-  const apiURL = process.env.NEXT_PUBLIC_API_URL;
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   useEffect(() => {
     console.log("online users are", onlineUsers);
@@ -51,35 +48,49 @@ export default function Messages() {
         <h2 className="font-semibold text-lg mb-4 text-offBlack dark:text-white">
           Messages
         </h2>
-        {chats.map((chat) => {
-          return (
-            <PersonChat
-              key={chat.id}
-              name={chat.name}
-              id={chat.id}
-              message={chat.message}
-              time={chat.time}
-              image={chat.image}
-              chatID={chat.chatID}
-            />
-          );
-        })}
+        {chats.length > 0 ? (
+          chats.map((chat) => {
+            return (
+              <PersonChat
+                key={chat.id}
+                name={chat.name}
+                id={chat.id}
+                message={chat.message}
+                time={chat.time}
+                image={chat.image}
+                chatID={chat.chatID}
+              />
+            );
+          })
+        ) : (
+          <EmptyMessages
+            title="You Don't Have Any Chats Yet"
+            descriptipon="Invite a friend or start chatting with a random person!"
+          />
+        )}
       </div>
       <div className="max-w-[50rem] mx-auto mt-4">
         <h2 className="font-semibold text-lg mb-4 text-offBlack dark:text-white">
           Online
         </h2>
-        {onlineUsers.map((user) => {
-          return (
-            <PersonOnline
-              key={user.userID}
-              username={user.username}
-              image={user.image}
-              email={user.email}
-              userID={user.userID}
-            />
-          );
-        })}
+        {onlineUsers.length > 0 ? (
+          onlineUsers.map((user) => {
+            return (
+              <PersonOnline
+                key={user.userID}
+                username={user.username}
+                image={user.image}
+                email={user.email}
+                userID={user.userID}
+              />
+            );
+          })
+        ) : (
+          <EmptyMessages
+            title="There is Nobody Active Now"
+            descriptipon="Wait until someone joins, or ask a friend to!"
+          />
+        )}
       </div>
     </div>
   );
