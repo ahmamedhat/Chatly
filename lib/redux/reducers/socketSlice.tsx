@@ -11,6 +11,7 @@ const socketSlice = createSlice({
   initialState,
   reducers: {
     setSocket(state, action: PayloadAction<Socket>) {
+      // @ts-expect-error: Unreachable code error
       state.socket = action.payload;
     },
   },
