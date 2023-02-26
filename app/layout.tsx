@@ -42,7 +42,6 @@ export default function RootLayout({
                 {mounted && (
                   <ThemeProvider enableSystem={true} attribute="class">
                     <main>
-                      children
                       <Drawer>{children}</Drawer>
                     </main>
                     <div className="m-auto" />

@@ -3,19 +3,15 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { IoArrowBack } from "react-icons/io5";
 
-interface IBackButton {
-  href: string;
-}
+interface IBackButton extends React.HTMLAttributes<HTMLButtonElement> {}
 
-const BackButton: React.FC<IBackButton> = ({ href }) => {
+const BackButton: React.FC<IBackButton> = ({ ...props }) => {
   const router = useRouter();
-  const navigate = () => {
-    router.replace(href);
-  };
   return (
     <button
-      onClick={navigate}
+      onClick={() => router.back()}
       className="dark:outline-secondaryMessage fill-dark dark:fill-secondaryMessage"
+      {...props}
     >
       <IoArrowBack size={IconsSizes.lg} className="fill-white" />
     </button>
