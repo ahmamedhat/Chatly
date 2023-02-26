@@ -1,20 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
-
 import { combineReducers } from "@reduxjs/toolkit";
-import socketSlice from "./reducers/socketSlice";
 import userSlice from "./reducers/userSlice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+import chatMiddleware from "./socketMiddleware";
+import chatSlice from "./reducers/socketSlice";
 
 const reducer = combineReducers({
   user: userSlice,
-  socket: socketSlice,
+  socket: chatSlice,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["socket"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -26,8 +25,8 @@ export function makeStore() {
       ...getDefaultMiddleware({
         serializableCheck: false,
       }),
+      chatMiddleware,
     ],
-    devTools: process.env.NODE_ENV !== "production",
   });
 }
 

@@ -1,21 +1,84 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { Socket } from "socket.io-client";
+import { ChatMessage, PersonOnlineMessage } from "@/types/typings";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
-  socket: {} as Socket,
+export interface Chat {
+  userID: string;
+  messages: ChatMessage[];
+}
+
+export interface SocketState {
+  chats: Chat[];
+  users: PersonOnlineMessage[];
+  isEstablishingConnection: boolean;
+  isConnected: boolean;
+}
+
+const initialState: SocketState = {
+  chats: [],
+  users: [],
+  isEstablishingConnection: false,
+  isConnected: false,
 };
 
-const socketSlice = createSlice({
+const SocketSlice = createSlice({
   name: "socket",
   initialState,
   reducers: {
-    setSocket(state, action: PayloadAction<Socket>) {
-      // @ts-expect-error: Unreachable code error
-      state.socket = action.payload;
+    startConnecting: (state) => {
+      state.isEstablishingConnection = true;
+    },
+    disconnect: (state) => {
+      state.isConnected = false;
+    },
+    connectionEstablished: (state) => {
+      state.isConnected = true;
+      state.isEstablishingConnection = true;
+      state.chats = [];
+    },
+
+    receiveAllMessages: (
+      state,
+      action: PayloadAction<{
+        messages: ChatMessage[];
+      }>
+    ) => {
+      console.log(state.isConnected, action.payload.messages);
+    },
+    receiveMessage: (
+      state,
+      action: PayloadAction<{
+        message: ChatMessage;
+        uid: string;
+      }>
+    ) => {
+      const chatIndex = state.chats.findIndex((chat) => {
+        return chat.userID == action.payload.uid;
+      });
+      if (chatIndex !== -1) {
+        state.chats[chatIndex]?.messages.push(action.payload.message);
+      } else {
+        state.chats.push({
+          userID: action.payload.uid,
+          messages: [action.payload.message],
+        });
+      }
+    },
+    submitMessage: (
+      state,
+      action: PayloadAction<{
+        message: ChatMessage;
+        room?: string;
+      }>
+    ) => {
+      console.log(state.isConnected, action.payload.room);
+      return;
+    },
+    saveUsers: (state, action: PayloadAction<PersonOnlineMessage[]>) => {
+      state.users = action.payload;
     },
   },
 });
 
-export const { setSocket } = socketSlice.actions;
-export default socketSlice.reducer;
+export const socketActions = SocketSlice.actions;
+
+export default SocketSlice.reducer;

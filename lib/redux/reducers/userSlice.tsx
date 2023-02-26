@@ -1,4 +1,4 @@
-import { User } from "@/typings";
+import { User } from "@/types/typings";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 

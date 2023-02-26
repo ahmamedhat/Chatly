@@ -1,59 +1,70 @@
 "use client";
 
-import { ChatHeader, ChatMessage } from "@/components";
+import { ChatHeader, ChatMessage as ChatMessageComponent } from "@/components";
 import { ChatMessages, IconsSizes } from "@/lib/constants";
-import { setSocket } from "@/lib/redux/reducers/socketSlice";
+import { socketActions } from "@/lib/redux/reducers/socketSlice";
 import { RootState } from "@/lib/redux/store";
-import { socketConnect } from "@/lib/socket/socket";
+import { ChatMessage } from "@/types/typings";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { TbSend } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Chat() {
+  const chatsState = useSelector((store: RootState) => store.socket.chats);
   const [messageInput, setMessageInput] = useState("");
   const [chatMessages, setChatMessages] = useState(ChatMessages);
-
-  const chatList = useRef<null | HTMLDivElement>(null);
-
   const dispatch = useDispatch();
+  const chatList = useRef<null | HTMLDivElement>(null);
   const user = useSelector((store: RootState) => store.user.user);
-  const socket = useSelector((store: RootState) => store.socket.socket);
+  const onlineUser = {
+    id: useSearchParams().get("userID"),
+    name: useSearchParams().get("username"),
+  };
 
   useEffect(() => {
-    if (!socket.auth) {
-      const socketObj = socketConnect(user);
-      dispatch(setSocket(socketObj));
-    } else {
-      socket.connect();
-      socket?.on("receive-message", (message) => {
-        console.log("message in chat page socket is", message);
-        setChatMessages([...chatMessages, message]);
-        console.log("messages now are", chatMessages.length);
-      });
-
-      chatList.current?.scrollIntoView({ behavior: "smooth" });
-      return () => {
-        socket.disconnect();
-      };
-    }
+    dispatch(socketActions.startConnecting());
+    chatList.current?.scrollIntoView({ behavior: "smooth" });
+    return () => {
+      dispatch(socketActions.disconnect());
+    };
   }, []);
 
-  const sendMessage = async () => {
+  useEffect(() => {
+    console.log("changed", chatsState[0]?.messages);
+    console.log("my user id is", user.id);
+    console.log("reciver id", onlineUser.id!);
+
+    chatsState?.length && setChatMessages(chatsState[0]?.messages);
+  }, [chatsState[0]?.messages]);
+
+  const sendMessage = () => {
     if (messageInput.trim().length < 1) return;
-    const newMessage = {
-      sender: user.name,
+    const newMessage: ChatMessage = {
       message: messageInput,
       id: Date.now(),
-      receiverId: 1,
-      senderId: user.id,
+      receiverId: onlineUser.id! ?? 1,
+      senderId: user?.id,
       time: Date().toString(),
-      key: Date.now(),
     };
-    //Todo: will change room with the user to open a room with
-    const room = "";
+
+    const uid =
+      newMessage.senderId === user?.id
+        ? newMessage.receiverId
+        : newMessage.senderId;
+    dispatch(
+      socketActions.submitMessage({
+        message: newMessage,
+        room: onlineUser.id as string,
+      })
+    );
+    dispatch(socketActions.receiveMessage({ message: newMessage, uid }));
     setChatMessages([...chatMessages, newMessage]);
-    socket?.emit("send-message", newMessage, room);
     setMessageInput("");
+
+    // const [getUser, { loading, error, data }] = useLazyQuery(GET_USER, {
+    //   variables: { email: session?.user?.email },
+    // });
   };
 
   useEffect(() => {
@@ -62,12 +73,12 @@ export default function Chat() {
 
   return (
     <div className="bg-white dark:bg-dark h-screen">
-      <div className="max-w-[60rem] flex flex-col justify-between pb-6 mx-auto h-full">
-        <ChatHeader />
-        <div className="overflow-y-scroll mt-[5rem]">
+      <div className="max-w-[60rem] flex flex-col justify-between pb-6 mx-auto h-full ">
+        <ChatHeader userName={onlineUser.name ?? "online user"} />
+        <div className="overflow-y-scroll pt-24 pb-14">
           {chatMessages.map((chatMessage) => {
             return (
-              <ChatMessage
+              <ChatMessageComponent
                 currentUserId={user.id}
                 id={chatMessage.id}
                 message={chatMessage.message}
@@ -82,7 +93,7 @@ export default function Chat() {
           <div ref={chatList} />
         </div>
 
-        <div className="relative mt-4">
+        <div className="fixed mt-4 left-2 right-2 bottom-4">
           <input
             type="text"
             value={messageInput}
