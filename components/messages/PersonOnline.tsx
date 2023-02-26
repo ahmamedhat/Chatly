@@ -11,6 +11,7 @@ const PersonOnline: React.FC<PersonOnlineMessage> = ({
 }) => {
   return self ? null : (
     <Link
+      as={`chat?username=${username}&userID=${userID}`}
       href={{
         pathname: "/chat",
         query: { username, userID },
