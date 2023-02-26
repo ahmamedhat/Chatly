@@ -1,7 +1,7 @@
 "use client";
 
 import { ApolloProvider } from "@apollo/client";
-import { Footer, Header } from "@/components";
+import { Drawer, Footer } from "@/components";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import { useEffect, useState } from "react";
@@ -41,10 +41,15 @@ export default function RootLayout({
               <PersistGate loading={null} persistor={persistor}>
                 {mounted && (
                   <ThemeProvider enableSystem={true} attribute="class">
-                    {path !== "/chat" && <Header appName="C H A T L Y" />}
-                    <main className="px-4">{children}</main>
+                    <main>
+                      {path === "/chat" ? (
+                        children
+                      ) : (
+                        <Drawer>{children}</Drawer>
+                      )}
+                    </main>
                     <div className="m-auto" />
-                    {path !== "/chat" && path !== "/messages" && <Footer />}
+                    {path == "/about" && <Footer />}
                   </ThemeProvider>
                 )}
               </PersistGate>
