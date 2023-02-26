@@ -1,3 +1,5 @@
+import clientPromise from "@/lib/api/mongodb";
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -8,14 +10,20 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/",
+    signOut: "/",
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  adapter: MongoDBAdapter(clientPromise, { databaseName: "Production" }),
   callbacks: {
-    async redirect({ baseUrl }: { baseUrl: string }) {
-      return baseUrl + "/messages";
+    async session({ user, session }: any) {
+      session.user.id = user.id;
+      return session;
     },
+  },
+  session: {
+    maxAge: 7 * 24 * 60 * 60,
   },
 };
 
