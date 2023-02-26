@@ -42,11 +42,8 @@ export default function RootLayout({
                 {mounted && (
                   <ThemeProvider enableSystem={true} attribute="class">
                     <main>
-                      {path === "/chat" ? (
-                        children
-                      ) : (
-                        <Drawer>{children}</Drawer>
-                      )}
+                      children
+                      <Drawer>{children}</Drawer>
                     </main>
                     <div className="m-auto" />
                     {path == "/about" && <Footer />}

@@ -6,12 +6,13 @@ import { socketActions } from "@/lib/redux/reducers/socketSlice";
 import { RootState } from "@/lib/redux/store";
 import { PersonOnlineMessage } from "@/types/typings";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Messages() {
   const socket = useSelector((store: RootState) => store.socket);
-  const user = useSelector((store: RootState) => store.user.user);
+  const router = useRouter();
   const [chats, setChats] = useState(Chats);
   const [onlineUsers, setOnlineUsers] = useState<PersonOnlineMessage[]>(
     socket.users
@@ -24,10 +25,12 @@ export default function Messages() {
   }, [session]);
 
   useEffect(() => {
-    dispatch(socketActions.startConnecting());
-    return () => {
-      dispatch(socketActions.disconnect());
-    };
+    if (session?.user) {
+      dispatch(socketActions.startConnecting());
+      return () => {
+        dispatch(socketActions.disconnect());
+      };
+    }
   }, []);
 
   useEffect(() => {

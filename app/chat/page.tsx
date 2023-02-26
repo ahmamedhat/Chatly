@@ -5,6 +5,7 @@ import { ChatMessages, IconsSizes } from "@/lib/constants";
 import { socketActions } from "@/lib/redux/reducers/socketSlice";
 import { RootState } from "@/lib/redux/store";
 import { ChatMessage } from "@/types/typings";
+import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 import { TbSend } from "react-icons/tb";
@@ -17,17 +18,20 @@ export default function Chat() {
   const dispatch = useDispatch();
   const chatList = useRef<null | HTMLDivElement>(null);
   const user = useSelector((store: RootState) => store.user.user);
+  const { data: session } = useSession();
   const onlineUser = {
     id: useSearchParams().get("userID"),
     name: useSearchParams().get("username"),
   };
 
   useEffect(() => {
-    dispatch(socketActions.startConnecting());
     chatList.current?.scrollIntoView({ behavior: "smooth" });
-    return () => {
-      dispatch(socketActions.disconnect());
-    };
+    if (session?.user) {
+      dispatch(socketActions.startConnecting());
+      return () => {
+        dispatch(socketActions.disconnect());
+      };
+    }
   }, []);
 
   useEffect(() => {
@@ -72,7 +76,7 @@ export default function Chat() {
   }, [chatMessages]);
 
   return (
-    <div className="bg-white dark:bg-dark h-screen">
+    <div className="bg-white dark:bg-dark h-screen absolute inset-0">
       <div className="max-w-[60rem] flex flex-col justify-between pb-6 mx-auto h-full ">
         <ChatHeader userName={onlineUser.name ?? "online user"} />
         <div className="overflow-y-scroll pt-24 pb-14">
@@ -93,7 +97,7 @@ export default function Chat() {
           <div ref={chatList} />
         </div>
 
-        <div className="fixed mt-4 left-2 right-2 bottom-4">
+        <div className="fixed mt-4 mx-auto left-2 right-2 bottom-4 max-w-[60rem]">
           <input
             type="text"
             value={messageInput}
