@@ -11,11 +11,11 @@ const PersonOnline: React.FC<PersonOnlineMessage> = ({
 }) => {
   return self ? null : (
     <Link
-      as={`chat?username=${username}&userID=${userID}`}
       href={{
         pathname: "/chat",
         query: { username, userID },
       }}
+      as={`/chat?username=${username}&userID=${userID}`}
       key={userID}
     >
       <div className="w-full bg-white dark:bg-dark h-20 border border-t-0 border-b-[0.5px] border-gray-200 dark:border-gray-800 py-2 border-x-0 flex items-center">

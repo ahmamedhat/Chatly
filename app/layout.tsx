@@ -12,6 +12,7 @@ import { Poppins } from "@next/font/google";
 import client from "@/lib/api/apollo";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "@/lib/redux/store";
+import Head from "./head";
 
 const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
@@ -33,10 +34,12 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={`${poppins.className}`}>
-      <head />
-      <body className="bg-white dark:bg-dark min-h-screen flex flex-col">
-        <ApolloProvider client={client}>
-          <SessionProvider>
+      <head>
+        <Head />
+      </head>
+      <SessionProvider>
+        <body className="bg-white dark:bg-dark min-h-screen flex flex-col">
+          <ApolloProvider client={client}>
             <Providers>
               <PersistGate loading={null} persistor={persistor}>
                 {mounted && (
@@ -50,9 +53,9 @@ export default function RootLayout({
                 )}
               </PersistGate>
             </Providers>
-          </SessionProvider>
-        </ApolloProvider>
-      </body>
+          </ApolloProvider>
+        </body>
+      </SessionProvider>
     </html>
   );
 }
