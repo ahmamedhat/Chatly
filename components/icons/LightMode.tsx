@@ -3,7 +3,7 @@ import React from "react";
 const LightMode = () => {
   return (
     <svg
-      className={`fill-offBlack w-iconMd h-iconMd`}
+      className={`fill-gray-600 w-iconMd h-iconMd`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >

@@ -17,7 +17,7 @@ const BackButton: React.FC<IBackButton> = ({ href }) => {
       onClick={navigate}
       className="dark:outline-secondaryMessage fill-dark dark:fill-secondaryMessage"
     >
-      <IoArrowBack size={IconsSizes.xl} className="fill-white" />
+      <IoArrowBack size={IconsSizes.lg} className="fill-white" />
     </button>
   );
 };

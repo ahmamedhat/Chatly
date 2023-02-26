@@ -3,7 +3,7 @@ import React from "react";
 const DarkMode = () => {
   return (
     <svg
-      className={`fill-secondaryMessage w-iconMd h-iconMd`}
+      className={`fill-gray-400 w-iconMd h-iconMd`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >

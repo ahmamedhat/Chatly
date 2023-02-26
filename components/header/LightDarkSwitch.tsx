@@ -9,7 +9,7 @@ const LightDarkSwitch = () => {
     currentTheme === "dark" ? setTheme("light") : setTheme("dark");
   };
   return (
-    <label className="swap swap-rotate select-none">
+    <label className="swap swap-rotate select-none rounded-lg">
       <div
         onClick={toggleTheme}
         className={`${currentTheme === "light" ? "swap-on" : "swap-off"}`}

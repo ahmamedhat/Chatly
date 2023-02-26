@@ -1,4 +1,4 @@
-import { Icon } from "@/typings";
+import { Icon } from "@/types/typings";
 import React from "react";
 
 const Google: React.FC<Icon> = ({ height, width }) => {

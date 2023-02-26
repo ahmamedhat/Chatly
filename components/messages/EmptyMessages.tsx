@@ -7,7 +7,7 @@ interface IEmptyMessages {
 
 const EmptyMessages: React.FC<IEmptyMessages> = ({ title, descriptipon }) => {
   return (
-    <div className="flex justify-center flex-col items-center text-center">
+    <div className="text-gray-400 flex justify-center flex-col items-center text-center">
       <p className="font-semibold text-lg">{title}</p>
       <p className="font-extralight text-sm">{descriptipon}</p>
     </div>

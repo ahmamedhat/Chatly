@@ -1,36 +1,31 @@
 "use client";
 
-import Google from "@/components/icons/Google";
-import { IconsSizes } from "@/lib/constants";
-import { BiLogOut } from "react-icons/bi";
-import { signOut, useSession, signIn, getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "@/lib/redux/reducers/userSlice";
+import { useRouter } from "next/navigation";
+import { Auth } from "@/components";
+import { RootState } from "@/lib/redux/store";
 
 export default function Home() {
   const { data: session } = useSession();
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const user = useSelector((store: RootState) => store.user.user);
+
+  useEffect(() => {
+    if (!user.name && session?.user) {
+      router.push("/messages");
+    }
+    if (session?.user?.name) {
+      dispatch(setUser(session?.user));
+    }
+  }, [session?.user]);
 
   return (
     <div className="bg-white dark:bg-dark space-y-4 py-2 flex flex-col justify-center items-center h-screen">
-      {session?.user ? (
-        <>
-          <p>Welcome Back</p>
-          <p>{session?.user?.name}</p>
-          <button
-            onClick={() => signOut()}
-            className="btn gap-2 bg-white dark:bg-dark text-black dark:text-secondaryMessage font-light hover:text-white"
-          >
-            <BiLogOut size={IconsSizes.md} className="fill-primaryMessage" />
-            logout
-          </button>
-        </>
-      ) : (
-        <button
-          onClick={() => signIn("google")}
-          className="btn gap-2 bg-white dark:bg-dark text-black dark:text-secondaryMessage font-light hover:text-white"
-        >
-          <Google width={IconsSizes.md} height={IconsSizes.md} />
-          Sign in with Google
-        </button>
-      )}
+      <Auth />
     </div>
   );
 }

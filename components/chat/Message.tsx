@@ -1,9 +1,9 @@
 import { timeFormatter } from "@/lib/helpers";
-import { ChatMessage as ChatMessageType } from "@/typings";
+import { ChatMessage as ChatMessageType } from "@/types/typings";
 import React from "react";
 
 interface IChatMessage extends ChatMessageType {
-  currentUserId: number;
+  currentUserId: string;
 }
 
 const ChatMessage: React.FC<IChatMessage> = ({
