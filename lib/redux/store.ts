@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "@reduxjs/toolkit";
 import userSlice from "./reducers/userSlice";
-import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import chatMiddleware from "./socketMiddleware";
 import chatSlice from "./reducers/socketSlice";
+import storage from "./persistStorage";
 
 const reducer = combineReducers({
   user: userSlice,
