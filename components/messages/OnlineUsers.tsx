@@ -12,31 +12,26 @@ import { useDispatch, useSelector } from "react-redux";
 
 const OnlineUsers = () => {
   const socket = useSelector((store: RootState) => store.socket);
-  const [onlineUsers, setOnlineUsers] = useState<PersonOnlineMessage[]>(
-    socket.users
-  );
+  const [onlineUsers, setOnlineUsers] = useState<PersonOnlineMessage[]>([]);
   const dispatch = useDispatch();
   const { data: session } = useSession();
 
   useEffect(() => {
     console.log("user here", session);
-  }, [session]);
-
-  useEffect(() => {
     if (session?.user) {
       dispatch(socketActions.startConnecting());
       return () => {
         dispatch(socketActions.disconnect());
       };
     }
-  }, []);
+  }, [session]);
 
   useEffect(() => {
     setOnlineUsers(socket.users);
   }, [socket.users]);
 
   return (
-    <div className="max-w-[50rem] mx-auto mt-4">
+    <div className="max-w-[50rem] mx-auto mt-4 h-full">
       <h2 className="font-semibold text-lg mb-4 text-gray-600 dark:text-gray-400">
         Online
       </h2>

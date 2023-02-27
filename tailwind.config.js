@@ -39,4 +39,7 @@ module.exports = {
   },
   darkMode: "class",
   plugins: [require("daisyui")],
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
 };

@@ -25,6 +25,7 @@ const SocketSlice = createSlice({
   initialState,
   reducers: {
     startConnecting: (state) => {
+      state.users = [];
       state.isEstablishingConnection = true;
     },
     disconnect: (state) => {

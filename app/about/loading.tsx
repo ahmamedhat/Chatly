@@ -7,7 +7,7 @@ const loading = () => {
       <Skeleton
         baseColor="#10171E"
         highlightColor="#15202B"
-        className="h-6 mb-4"
+        className="h-6 mb-4 "
       />
       <Skeleton
         baseColor="#10171E"

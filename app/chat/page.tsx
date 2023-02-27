@@ -17,7 +17,6 @@ export default function Chat() {
   const [chatMessages, setChatMessages] = useState(ChatMessages);
   const dispatch = useDispatch();
   const chatList = useRef<null | HTMLDivElement>(null);
-  const user = useSelector((store: RootState) => store.user.user);
   const { data: session } = useSession();
   const onlineUser = {
     id: useSearchParams().get("userID"),
@@ -35,10 +34,6 @@ export default function Chat() {
   }, []);
 
   useEffect(() => {
-    console.log("changed", chatsState[0]?.messages);
-    console.log("my user id is", user.id);
-    console.log("reciver id", onlineUser.id!);
-
     chatsState?.length && setChatMessages(chatsState[0]?.messages);
   }, [chatsState[0]?.messages]);
 
@@ -47,13 +42,13 @@ export default function Chat() {
     const newMessage: ChatMessage = {
       message: messageInput,
       id: Date.now(),
-      receiverId: onlineUser.id! ?? 1,
-      senderId: user?.id,
+      receiverId: onlineUser.id! ?? "2",
+      senderId: session?.user.id ?? "1",
       time: Date().toString(),
     };
 
     const uid =
-      newMessage.senderId === user?.id
+      newMessage.senderId === session?.user?.id
         ? newMessage.receiverId
         : newMessage.senderId;
     dispatch(
@@ -65,10 +60,6 @@ export default function Chat() {
     dispatch(socketActions.receiveMessage({ message: newMessage, uid }));
     setChatMessages([...chatMessages, newMessage]);
     setMessageInput("");
-
-    // const [getUser, { loading, error, data }] = useLazyQuery(GET_USER, {
-    //   variables: { email: session?.user?.email },
-    // });
   };
 
   useEffect(() => {
@@ -76,14 +67,14 @@ export default function Chat() {
   }, [chatMessages]);
 
   return (
-    <div className="bg-white dark:bg-dark h-screen absolute inset-0">
+    <div className="bg-white dark:bg-dark h-full absolute inset-0">
       <div className="max-w-[60rem] flex flex-col justify-between pb-6 mx-auto h-full ">
         <ChatHeader userName={onlineUser.name ?? "online user"} />
         <div className="overflow-y-scroll pt-24 pb-14">
           {chatMessages.map((chatMessage) => {
             return (
               <ChatMessageComponent
-                currentUserId={user.id}
+                currentUserId={session?.user.id ?? "1"}
                 id={chatMessage.id}
                 message={chatMessage.message}
                 receiverId={chatMessage.receiverId}
