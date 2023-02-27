@@ -2,7 +2,7 @@ const fetchData = async () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       resolve("done!");
-    }, 5000);
+    }, 2000);
   });
 };
 
