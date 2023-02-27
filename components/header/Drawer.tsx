@@ -1,15 +1,16 @@
+"use client";
+
 import { IconsSizes } from "@/lib/constants";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { RiMenu4Fill } from "react-icons/ri";
+import LoginLogoutState from "../buttons/LoginLogoutState";
 import LightDarkSwitch from "./LightDarkSwitch";
 
 interface IDrawer extends React.HTMLAttributes<HTMLDivElement> {}
 
 const Drawer: React.FC<IDrawer> = ({ children }) => {
-  const { data: session } = useSession();
   const router = useRouter();
 
   const onLinkPressed = (pathname: string) => {
@@ -41,9 +42,7 @@ const Drawer: React.FC<IDrawer> = ({ children }) => {
               </li>
               <li className="rounded-lg">
                 <Link href={"/"} className="rounded-lg">
-                  <p className="text-sm font-light">
-                    {session?.user ? "logout" : "login"}
-                  </p>
+                  <LoginLogoutState />
                 </Link>
               </li>
               <li className="rounded-lg">
@@ -54,7 +53,7 @@ const Drawer: React.FC<IDrawer> = ({ children }) => {
         </div>
         <div className="px-4">{children}</div>
       </div>
-      <div className="drawer-side text-gray-600 dark:text-gray-400">
+      <div className="drawer-side text-gray-600 dark:text-gray-400 ">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
         <ul className="menu p-4 w-80 space-y-2 bg-gray-200 dark:bg-base-100">
           <li>
@@ -81,7 +80,7 @@ const Drawer: React.FC<IDrawer> = ({ children }) => {
               onClick={() => onLinkPressed("/")}
               className="text-sm font-light"
             >
-              {session?.user ? "logout" : "login"}
+              <LoginLogoutState />
             </label>
           </li>
           <li className="rounded-lg block">

@@ -1,3 +1,5 @@
+"use client";
+
 import { IconsSizes } from "@/lib/constants";
 import { signOut } from "next-auth/react";
 import React, { useState } from "react";
