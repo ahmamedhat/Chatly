@@ -1,13 +1,8 @@
-const fetchData = async () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve("done!");
-    }, 1000);
-  });
-};
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { getServerSession } from "next-auth";
 
 export default async function About() {
-  const data = await fetchData();
+  const user = await getServerSession(authOptions);
 
   return (
     <div className="h-full">
