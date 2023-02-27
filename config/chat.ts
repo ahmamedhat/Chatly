@@ -10,6 +10,10 @@ export const chatConfig: ChatConfig[] = [
     href: "/about",
   },
   {
+    title: "contact",
+    href: "/contact",
+  },
+  {
     title: "account",
     href: "/",
   },
