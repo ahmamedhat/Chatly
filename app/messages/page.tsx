@@ -7,7 +7,7 @@ export default async function Messages() {
 
   return (
     <div className="h-full">
-      <OnlineUsers currentUser={user.user} />
+      <OnlineUsers currentUser={user?.user} />
     </div>
   );
 }
