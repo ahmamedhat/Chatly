@@ -34,3 +34,8 @@ export type Icon = {
   height: string;
   width: string;
 };
+
+export type ChatConfig = {
+  title: string;
+  href: string;
+};

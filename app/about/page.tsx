@@ -11,8 +11,10 @@ export default async function About() {
   console.log("data is", data);
 
   return (
-    <div className="bg-white dark:bg-dark h-screen">
+    <div>
       <p className="text-gray-400 mb-6">About</p>
+      <br />
+      <br />
       <p className="mb-2">
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -24,6 +26,7 @@ export default async function About() {
         with desktop publishing software like Aldus PageMaker including versions
         of Lorem Ipsum.
       </p>
+      <br />
       <p>
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text ever

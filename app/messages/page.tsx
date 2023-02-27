@@ -1,16 +1,10 @@
-import {
-  EmptyMessages,
-  OnlineUsers,
-  PersonChat,
-  PersonOnline,
-} from "@/components";
-import { useDispatch, useSelector } from "react-redux";
+import { OnlineUsers } from "@/components";
 
 export default function Messages() {
   // const [chats, setChats] = useState(Chats);
 
   return (
-    <div className="bg-white dark:bg-dark py-2">
+    <div>
       {/* <div className="max-w-[50rem] mx-auto">
         <h2 className="font-semibold text-lg mb-4text-gray-600 dark:text-gray-400">
           Messages
@@ -35,7 +29,7 @@ export default function Messages() {
             descriptipon="Invite a friend or start chatting with a random person!"
           />
         )}
-      </div> */}
+      </div>  */}
       <OnlineUsers />
     </div>
   );

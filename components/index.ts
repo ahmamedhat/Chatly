@@ -1,4 +1,5 @@
 export { default as Header } from "./header/Header";
+export { default as NavItem } from "./header/NavItem";
 export { default as Drawer } from "./header/Drawer";
 export { default as PersonChat } from "./messages/PersonChat";
 export { default as PersonOnline } from "./messages/PersonOnline";

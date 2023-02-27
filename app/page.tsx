@@ -24,7 +24,7 @@ export default function Home() {
   }, [session?.user]);
 
   return (
-    <div className="bg-white dark:bg-dark space-y-4 py-2 flex flex-col justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center">
       <Auth />
     </div>
   );
