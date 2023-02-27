@@ -1,4 +1,4 @@
-import { ApolloProvider, Drawer, Session, ThemeProvider } from "@/components";
+import { ApolloProvider, Drawer, ThemeProvider } from "@/components";
 import "./globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Providers } from "@/lib/redux/provider";
@@ -18,20 +18,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${poppins.className}`}>
       <head />
-      <Session>
-        <body className="bg-white dark:bg-dark min-h-screen flex flex-col">
-          <ApolloProvider>
-            <Providers>
-              <ThemeProvider>
-                <main>
-                  <Drawer>{children}</Drawer>
-                </main>
-                <div className="m-auto" />
-              </ThemeProvider>
-            </Providers>
-          </ApolloProvider>
-        </body>
-      </Session>
+      <body className="bg-white dark:bg-dark min-h-screen flex flex-col">
+        <ApolloProvider>
+          <Providers>
+            <ThemeProvider>
+              <main>
+                <Drawer>{children}</Drawer>
+              </main>
+              <div className="m-auto" />
+            </ThemeProvider>
+          </Providers>
+        </ApolloProvider>
+      </body>
     </html>
   );
 }

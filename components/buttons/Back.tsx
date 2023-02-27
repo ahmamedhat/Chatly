@@ -1,20 +1,20 @@
 import { IconsSizes } from "@/lib/constants";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import React from "react";
 import { IoArrowBack } from "react-icons/io5";
 
-interface IBackButton extends React.HTMLAttributes<HTMLButtonElement> {}
+interface IBackButton {
+  href: string;
+}
 
-const BackButton: React.FC<IBackButton> = ({ ...props }) => {
-  const router = useRouter();
+const BackButton: React.FC<IBackButton> = ({ href }) => {
   return (
-    <button
-      onClick={() => router.back()}
-      className="dark:outline-secondaryMessage fill-dark dark:fill-secondaryMessage"
-      {...props}
-    >
-      <IoArrowBack size={IconsSizes.lg} className="fill-white" />
-    </button>
+    <Link href={href ?? "/"}>
+      <IoArrowBack
+        size={IconsSizes.lg}
+        className="fill-dark dark:fill-secondaryMessage"
+      />
+    </Link>
   );
 };
 
