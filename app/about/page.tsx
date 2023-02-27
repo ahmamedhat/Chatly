@@ -1,17 +1,17 @@
-const fetchData = async () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve("done!");
-    }, 2000);
-  });
-};
+// const fetchData = async () => {
+//   return new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//       resolve("done!");
+//     }, 2000);
+//   });
+// };
 
 export default async function About() {
-  const data = await fetchData();
-  console.log("data is", data);
+  // const data = await fetchData();
+  // console.log("data is", data);
 
   return (
-    <div>
+    <div className="h-full">
       <p className="text-gray-400 mb-6">About</p>
       <br />
       <br />
