@@ -15,7 +15,7 @@ export default async function Chat({
       <div className="max-w-[60rem] flex flex-col justify-between pb-6 mx-auto h-full ">
         <ChatHeader userName={searchParams?.username ?? "online user"} />
         <ChatMain
-          currentUser={user}
+          currentUser={user.user}
           onlineUserID={searchParams?.userID as string}
         />
       </div>
