@@ -8,6 +8,7 @@ import { socketActions } from "@/lib/redux/reducers/socketSlice";
 import { RootState } from "@/lib/redux/store";
 import { TbSend } from "react-icons/tb";
 import { IconsSizes } from "@/lib/constants";
+import clsx from "clsx";
 
 interface IChatMessages {
   currentUser: User;
@@ -93,11 +94,13 @@ const ChatMessages = ({ currentUser, onlineUserID }: IChatMessages) => {
 
         <TbSend
           size={IconsSizes.lg}
-          className={`absolute right-2 top-[50%] -translate-y-[50%] cursor-pointer duration-200 select-none transition ${
-            messageInput.trim().length < 1
-              ? "dark:bg-darkMessage bg-gray-500"
-              : "bg-primaryMessage"
-          }  rounded-full p-1 stroke-white`}
+          className={clsx(
+            "absolute right-2 top-[50%] -translate-y-[50%] cursor-pointer duration-200 select-none transition rounded-full p-1 stroke-white",
+            {
+              "dark:bg-darkMessage bg-gray-500": messageInput.trim().length < 1,
+              "bg-primaryMessage": messageInput.trim().length > 0,
+            }
+          )}
           onClick={sendMessage}
         />
       </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { IconsSizes } from "@/lib/constants";
+import clsx from "clsx";
 import { signOut } from "next-auth/react";
 import React, { useState } from "react";
 import { BiLogOut } from "react-icons/bi";
@@ -20,9 +21,20 @@ const Logout = () => {
   return (
     <button
       onClick={onSignout}
-      className={`btn gap-2 bg-white dark:bg-dark text-black dark:text-secondaryMessage font-light hover:text-white mt-10 mx-auto flex ${
-        loading && "loading"
-      }`}
+      className={clsx(
+        "normal-case",
+        "btn",
+        "gap-2",
+        "flex",
+        "mx-auto",
+        "bg-white",
+        "dark:bg-dark",
+        "text-black",
+        "dark:text-secondaryMessage",
+        "font-light",
+        "hover:text-white",
+        { loading }
+      )}
     >
       {!loading && (
         <BiLogOut size={IconsSizes.md} className="fill-primaryMessage" />

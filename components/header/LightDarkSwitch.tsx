@@ -1,5 +1,6 @@
 "use client";
 
+import clsx from "clsx";
 import { useTheme } from "next-themes";
 import React from "react";
 import { DarkModeIcon, LightModeIcon } from "..";
@@ -14,7 +15,10 @@ const LightDarkSwitch = () => {
     <label className="swap swap-rotate select-none rounded-lg">
       <div
         onClick={toggleTheme}
-        className={`${currentTheme === "light" ? "swap-on" : "swap-off"}`}
+        className={clsx({
+          "swap-on": currentTheme === "light",
+          "swap-off": currentTheme === "dark",
+        })}
       >
         <DarkModeIcon />
       </div>
