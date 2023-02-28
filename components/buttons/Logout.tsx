@@ -22,17 +22,7 @@ const Logout = () => {
     <button
       onClick={onSignout}
       className={clsx(
-        "normal-case",
-        "btn",
-        "gap-2",
-        "flex",
-        "mx-auto",
-        "bg-white",
-        "dark:bg-dark",
-        "text-black",
-        "dark:text-secondaryMessage",
-        "font-light",
-        "hover:text-white",
+        "normal-case btn gap-2 flex mx-auto bg-white dark:bg-dark text-black dark:text-secondaryMessage font-light hover:text-white",
         { loading }
       )}
     >

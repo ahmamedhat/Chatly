@@ -22,9 +22,7 @@ export default function RootLayout({
         <ApolloProvider>
           <Providers>
             <ThemeProvider>
-              <main>
-                <Drawer>{children}</Drawer>
-              </main>
+              <Drawer>{children}</Drawer>
               <div className="m-auto" />
             </ThemeProvider>
           </Providers>

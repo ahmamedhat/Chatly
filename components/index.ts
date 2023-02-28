@@ -13,7 +13,6 @@ export { default as ChatHeader } from "./chat/Header";
 export { default as ChatMain } from "./chat/ChatMessages";
 export { default as BackButton } from "./buttons/Back";
 export { default as Logout } from "./buttons/Logout";
-export { default as Auth } from "./buttons/Auth";
 export { default as GoogleSignin } from "./buttons/GoogleSignin";
 export { default as ThemeProvider } from "./theme/Provider";
 export { default as ApolloProvider } from "./apollo/Provider";

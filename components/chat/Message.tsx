@@ -18,9 +18,6 @@ const ChatMessage: React.FC<IChatMessage> = ({
   return (
     <div
       key={id + receiverId}
-      // className={`chat cursor-default text-dark ${
-      //   senderId === currentUserId ? "chat-end" : "chat-start"
-      // } `}
       className={clsx("chat cursor-default text-dark", {
         "chat-end": senderId === currentUserId,
         "chat-start": senderId !== currentUserId,
