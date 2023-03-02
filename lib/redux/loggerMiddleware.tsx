@@ -4,7 +4,8 @@ const loggerMiddleware: Middleware = (store) => {
   return (next) => {
     return (action) => {
       const result = next(action);
-      console.log("next state", store.getState());
+      console.log("action", action);
+      // console.log("next state", store.getState());
       return result;
     };
   };

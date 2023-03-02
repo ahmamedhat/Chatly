@@ -4,6 +4,7 @@ import { ChatMessage, User } from "@/types/typings";
 import { ChatEvents } from "../constants";
 import { socketActions } from "./reducers/socketSlice";
 import { parseOnlineUsers } from "../helpers";
+import { setUser } from "./reducers/userSlice";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -16,6 +17,7 @@ const chatMiddleware: Middleware = (store) => {
 
     if (socketActions.startConnecting.match(action)) {
       if (!isConnectionEstablished) {
+        store.dispatch(setUser(action.payload));
         socket = io(apiURL as string, { autoConnect: false });
       }
 
@@ -44,13 +46,13 @@ const chatMiddleware: Middleware = (store) => {
         store.dispatch(socketActions.saveUsers(newUsers));
       });
 
-      console.log("user is state", user.id);
+      console.log("user is state", user?.id);
 
       socket.auth = {
-        userID: user.id,
-        username: user.name,
-        email: user.email,
-        image: user.image,
+        userID: user?.id,
+        username: user?.name,
+        email: user?.email,
+        image: user?.image,
       };
       socket.connect();
     }

@@ -1,4 +1,4 @@
-import { ChatMessage, PersonOnlineMessage } from "@/types/typings";
+import { ChatMessage, PersonOnlineMessage, User } from "@/types/typings";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Chat {
@@ -24,7 +24,7 @@ const SocketSlice = createSlice({
   name: "socket",
   initialState,
   reducers: {
-    startConnecting: (state) => {
+    startConnecting: (state, action: PayloadAction<User>) => {
       state.users = [];
       state.isEstablishingConnection = true;
     },

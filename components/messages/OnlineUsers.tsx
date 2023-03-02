@@ -15,13 +15,15 @@ interface IOnlineUsers {
 
 const OnlineUsers = ({ currentUser }: IOnlineUsers) => {
   const socket = useSelector((store: RootState) => store.socket);
+  const user = useSelector((store: RootState) => store.user.user);
   const [onlineUsers, setOnlineUsers] = useState<PersonOnlineMessage[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("user here", currentUser);
+    console.log("user redux here", user);
     if (currentUser) {
-      dispatch(socketActions.startConnecting());
+      dispatch(socketActions.startConnecting(currentUser));
       return () => {
         dispatch(socketActions.disconnect());
       };
