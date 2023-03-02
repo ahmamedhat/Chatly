@@ -9,6 +9,8 @@ const PersonOnline: React.FC<PersonOnlineMessage> = ({
   username,
   self,
 }) => {
+  console.log("user here", username, self);
+
   return self ? null : (
     <Link
       href={{
