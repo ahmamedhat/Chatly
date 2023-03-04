@@ -24,14 +24,15 @@ interface IChatMessages {
 const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
   const dispatch = useDispatch();
   const chatsState = useSelector((store: RootState) => store.socket.chats);
-  const [chatMessages, setChatMessages] = useState<Message[]>([]);
+  const [chatMessages, setChatMessages] = useState<Message[]>(
+    chat?.messages || []
+  );
   const chatList = useRef<null | HTMLDivElement>(null);
 
   const [addNewMessage] = useMutation(ADD_NEW_MESSAGE);
 
   useEffect(() => {
     if (chat?.messages) {
-      setChatMessages(chat.messages);
       dispatch(
         socketActions.receiveAllMessages({
           userID: onlineUserID,
@@ -48,10 +49,10 @@ const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
   }, []);
 
   useEffect(() => {
-    chatsState[onlineUserID]?.length &&
+    !!chatsState[onlineUserID]?.length &&
       setChatMessages(chatsState[onlineUserID]);
     chatList.current?.scrollIntoView({ behavior: "smooth" });
-  }, [chatsState[onlineUserID]]);
+  }, [chat?.messages, chatsState[onlineUserID]]);
 
   const sendMessage = (messageInput: string) => {
     if (messageInput.trim().length < 1) return;
@@ -73,7 +74,7 @@ const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
       //@ts-ignore
       to: { _id: onlineUserID },
       //@ts-ignore
-      from: { _id: currentUser.id },
+      from: { _id: currentUser.id, name: currentUser.name },
       createdAt: moment().valueOf().toString(),
     };
     dispatch(
@@ -90,7 +91,7 @@ const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
 
   return (
     <div className="overflow-y-scroll pt-24 pb-14">
-      {chatMessages.map((chatMessage) => {
+      {chatMessages?.map((chatMessage) => {
         return (
           <ChatMessageComponent
             currentUserId={currentUser.id ?? "1"}

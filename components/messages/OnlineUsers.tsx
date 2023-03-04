@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { memo } from "react";
 import EmptyMessages from "./EmptyMessages";
 import PersonOnline from "./PersonOnline";
 import { socketActions } from "@/lib/redux/reducers/socketSlice";
@@ -19,7 +19,6 @@ const OnlineUsers = ({ currentUser }: IOnlineUsers) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("user here", currentUser);
     if (currentUser) {
       dispatch(socketActions.startConnecting(currentUser));
       return () => {
@@ -66,4 +65,4 @@ const OnlineUsers = ({ currentUser }: IOnlineUsers) => {
   );
 };
 
-export default OnlineUsers;
+export default memo(OnlineUsers);

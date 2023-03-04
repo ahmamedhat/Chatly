@@ -1,7 +1,7 @@
 import { IconsSizes } from "@/lib/constants";
 import { PersonOnlineMessage } from "@/types/typings";
 import Link from "next/link";
-import React from "react";
+import React, { memo } from "react";
 import { BsPersonCircle } from "react-icons/bs";
 
 const PersonOnline: React.FC<PersonOnlineMessage> = ({
@@ -34,4 +34,4 @@ const PersonOnline: React.FC<PersonOnlineMessage> = ({
   );
 };
 
-export default PersonOnline;
+export default memo(PersonOnline);

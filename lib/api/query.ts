@@ -12,6 +12,7 @@ export const GET_CHATS = gql`
       messages {
         _id
         body
+        read
         from {
           name
           _id

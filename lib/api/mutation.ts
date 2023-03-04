@@ -26,3 +26,11 @@ export const ADD_NEW_MESSAGE = gql`
     }
   }
 `;
+
+export const MARK_MESSAGE_AS_READ = gql`
+  mutation MarkAsRead($id: ID!) {
+    markAsRead(id: $id) {
+      read
+    }
+  }
+`;
