@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { socketActions } from "@/lib/redux/reducers/socketSlice";
 import { RootState } from "@/lib/redux/store";
 import { useMutation } from "@apollo/client";
-import { ADD_NEW_MESSAGE } from "@/lib/api/mutation";
+import { ADD_NEW_MESSAGE, MARK_MESSAGE_AS_READ } from "@/lib/api/mutation";
 import { Chat, Message } from "@/lib/api/gql/graphql";
 import moment from "moment";
 
@@ -30,6 +30,7 @@ const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
   const chatList = useRef<null | HTMLDivElement>(null);
 
   const [addNewMessage] = useMutation(ADD_NEW_MESSAGE);
+  const [markAsRead] = useMutation(MARK_MESSAGE_AS_READ);
 
   useEffect(() => {
     if (chat?.messages) {
@@ -49,8 +50,21 @@ const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
   }, []);
 
   useEffect(() => {
-    !!chatsState[onlineUserID]?.length &&
+    console.log("entered here 1");
+
+    if (!!chatsState[onlineUserID]?.length) {
       setChatMessages(chatsState[onlineUserID]);
+      console.log("entered here 2");
+
+      if (chatsState[onlineUserID].slice(-1)[0].from._id === onlineUserID) {
+        console.log("entered here 3");
+
+        console.log("lksjfad", chatMessages.slice(-1)[0]._id);
+        markAsRead({
+          variables: { id: chatsState[onlineUserID].slice(-1)[0]._id },
+        }).then((res) => console.log("seeenn"));
+      }
+    }
     chatList.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat?.messages, chatsState[onlineUserID]]);
 
@@ -63,6 +77,13 @@ const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
           to: onlineUserID,
           body: messageInput,
         },
+      }).then((data) => {
+        dispatch(
+          socketActions.submitMessage({
+            message: data.data.addNewMessage,
+            room: onlineUserID as string,
+          })
+        );
       });
     } catch (e) {
       console.log("an error has occured");
@@ -77,12 +98,7 @@ const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
       from: { _id: currentUser.id, name: currentUser.name },
       createdAt: moment().valueOf().toString(),
     };
-    dispatch(
-      socketActions.submitMessage({
-        message: newMessage,
-        room: onlineUserID as string,
-      })
-    );
+
     dispatch(
       socketActions.receiveMessage({ message: newMessage, uid: onlineUserID })
     );
@@ -105,7 +121,10 @@ const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
         );
       })}
       <div ref={chatList} className="pb-16" />
-      <MessageInput onSendHandler={(message) => sendMessage(message)} />
+      <MessageInput
+        uid={onlineUserID}
+        onSendHandler={(message) => sendMessage(message)}
+      />
     </div>
   );
 };

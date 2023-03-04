@@ -45,7 +45,7 @@ const PersonChat: React.FC<IPersonChatMessage> = ({
         )}
       >
         {!message.read && (
-          <div className="bg-red-500 rounded-full w-3 h-3 absolute left-0 top-0" />
+          <div className="bg-red-500 rounded-full w-3 h-3 absolute right-0 top-0" />
         )}
         <div className="w-[20%] max-w-[55px] items-center flex justify-center mr-2">
           {image ? (

@@ -35,8 +35,13 @@ const chatMiddleware: Middleware = (store) => {
       socket.on(ChatEvents.ReceiveMessage, (message: Message, uid: string) => {
         if (uid == user.id) uid = message.to._id;
         toast(`${message.from.name}: ${message.body}`);
-
         store.dispatch(socketActions.receiveMessage({ message, uid }));
+      });
+
+      socket.on(ChatEvents.ReceiveTyping, (uid: string) => {
+        console.log("uid is", uid);
+
+        store.dispatch(socketActions.setTyping({ uid, value: true }));
       });
 
       socket.on(ChatEvents.AllUsers, (users: []) => {
@@ -57,6 +62,9 @@ const chatMiddleware: Middleware = (store) => {
         action.payload.message,
         action.payload.room
       );
+    }
+    if (socketActions.sendTyping.match(action) && isConnectionEstablished) {
+      socket.emit(ChatEvents.SendTyping, action.payload.room);
     }
     if (socketActions.disconnect.match(action) && isConnectionEstablished) {
       socket.removeAllListeners();

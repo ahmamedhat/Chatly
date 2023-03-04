@@ -6,9 +6,14 @@ export interface Chat {
   [key: string]: Message[];
 }
 
+export interface Typing {
+  [key: string]: boolean;
+}
+
 export interface SocketState {
   chats: Chat;
   users: PersonOnlineMessage[];
+  typing: Typing;
   isEstablishingConnection: boolean;
   isConnected: boolean;
 }
@@ -16,6 +21,7 @@ export interface SocketState {
 const initialState: SocketState = {
   chats: {},
   users: [],
+  typing: {},
   isEstablishingConnection: false,
   isConnected: false,
 };
@@ -26,6 +32,7 @@ const SocketSlice = createSlice({
   reducers: {
     startConnecting: (state, action: PayloadAction<User>) => {
       state.users = [];
+      state.typing = {};
       state.isEstablishingConnection = true;
     },
     disconnect: (state) => {
@@ -43,9 +50,6 @@ const SocketSlice = createSlice({
         chat: GraphqlChat;
       }>
     ) => {
-      console.log("user is", action.payload.userID);
-      console.log("chat is", action.payload.chat);
-
       state.chats[action.payload.userID] = action.payload.chat.messages;
 
       return;
@@ -73,8 +77,31 @@ const SocketSlice = createSlice({
       console.log(state.isConnected, action.payload.room);
       return;
     },
+    sendTyping: (
+      state,
+      action: PayloadAction<{
+        room?: string;
+      }>
+    ) => {
+      console.log(state.isConnected, action.payload.room);
+      return;
+    },
+    setTyping: (
+      state,
+      action: PayloadAction<{
+        uid: string;
+        value: boolean;
+      }>
+    ) => {
+      state.typing[action.payload.uid] = action.payload.value;
+      return;
+    },
     saveUsers: (state, action: PayloadAction<PersonOnlineMessage[]>) => {
       state.users = action.payload;
+      state.typing = state.users.reduce(function (result: any, item) {
+        result[item.userID] = false;
+        return result;
+      }, {});
     },
   },
 });

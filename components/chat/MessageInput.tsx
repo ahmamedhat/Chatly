@@ -1,23 +1,32 @@
 "use client";
 
 import { IconsSizes } from "@/lib/constants";
+import { socketActions } from "@/lib/redux/reducers/socketSlice";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { TbSend } from "react-icons/tb";
+import { useDispatch } from "react-redux";
 
 interface IMessageInput {
+  uid: string;
   onSendHandler: (message: string) => void;
 }
 
-const MessageInput = ({ onSendHandler }: IMessageInput) => {
+const MessageInput = ({ onSendHandler, uid }: IMessageInput) => {
   const [messageInput, setMessageInput] = useState<string>("");
+  const dispatch = useDispatch();
+
+  const onInputChange = (value: string) => {
+    setMessageInput(value);
+    dispatch(socketActions.sendTyping({ room: uid }));
+  };
 
   return (
     <div className="fixed mx-auto left-2 right-2 bottom-4 max-w-[60rem]">
       <input
         type="text"
         value={messageInput}
-        onChange={(e) => setMessageInput(e.target.value)}
+        onChange={(e) => onInputChange(e.target.value)}
         placeholder="Write your message..."
         className="pr-10 input w-full bg-lightTextInput dark:bg-darkTextInput text-offBlack dark:text-secondaryMessage"
         onKeyDown={(event) => {

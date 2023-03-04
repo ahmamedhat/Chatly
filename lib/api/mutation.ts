@@ -15,6 +15,7 @@ export const ADD_NEW_MESSAGE = gql`
     addNewMessage(from: $from, to: $to, body: $body) {
       _id
       body
+      createdAt
       from {
         name
         _id

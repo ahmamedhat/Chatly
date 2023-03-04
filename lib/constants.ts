@@ -16,9 +16,11 @@ export enum Colors {
 
 export enum ChatEvents {
   SendMessage = "send_message",
-  RequestAllMessages = "request_all_messages",
-  SendAllMessages = "send_all_messages",
   ReceiveMessage = "receive_message",
+  SendAllMessages = "send_all_messages",
+  SendTyping = "send_typing",
+  ReceiveTyping = "receive_typing",
+  RequestAllMessages = "request_all_messages",
   AllUsers = "users",
 }
 
