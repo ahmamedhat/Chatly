@@ -1,10 +1,11 @@
 import { Middleware } from "redux";
 import { io, Socket } from "socket.io-client";
-import { ChatMessage, User } from "@/types/typings";
+import { User } from "@/types/typings";
 import { ChatEvents } from "../constants";
 import { socketActions } from "./reducers/socketSlice";
 import { parseOnlineUsers } from "../helpers";
 import { setUser } from "./reducers/userSlice";
+import { Chat, Message } from "../api/gql/graphql";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -26,16 +27,12 @@ const chatMiddleware: Middleware = (store) => {
         socket.emit(ChatEvents.RequestAllMessages);
       });
 
-      socket.on(ChatEvents.SendAllMessages, (messages: ChatMessage[]) => {
-        store.dispatch(socketActions.receiveAllMessages({ messages }));
+      socket.on(ChatEvents.SendAllMessages, (chat: Chat, userID: string) => {
+        store.dispatch(socketActions.receiveAllMessages({ userID, chat }));
       });
 
-      socket.on(ChatEvents.ReceiveMessage, (message: ChatMessage) => {
-        const uid =
-          message.senderId === user.id ? message.receiverId : message.senderId;
-
-        console.log("uid is", uid);
-
+      socket.on(ChatEvents.ReceiveMessage, (message: Message, uid: string) => {
+        if (uid == user.id) uid = message.to._id;
         store.dispatch(socketActions.receiveMessage({ message, uid }));
       });
 
@@ -45,9 +42,6 @@ const chatMiddleware: Middleware = (store) => {
         const newUsers = parseOnlineUsers(users, user.id);
         store.dispatch(socketActions.saveUsers(newUsers));
       });
-
-      console.log("user is state", user?.id);
-
       socket.auth = {
         userID: user?.id,
         username: user?.name,
