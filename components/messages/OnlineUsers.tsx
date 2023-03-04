@@ -15,13 +15,11 @@ interface IOnlineUsers {
 
 const OnlineUsers = ({ currentUser }: IOnlineUsers) => {
   const socket = useSelector((store: RootState) => store.socket);
-  const user = useSelector((store: RootState) => store.user.user);
   const [onlineUsers, setOnlineUsers] = useState<PersonOnlineMessage[]>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("user here", currentUser);
-    console.log("user redux here", user);
     if (currentUser) {
       dispatch(socketActions.startConnecting(currentUser));
       return () => {
@@ -35,7 +33,7 @@ const OnlineUsers = ({ currentUser }: IOnlineUsers) => {
   }, [socket.users]);
 
   return (
-    <div className="max-w-[50rem] mx-auto mt-4 h-full">
+    <div className="max-w-[50rem] mx-auto mt-4 mb-6">
       <h2 className="font-semibold text-lg mb-4 text-gray-600 dark:text-gray-400">
         Online
       </h2>

@@ -1,38 +1,37 @@
+import { Message } from "@/lib/api/gql/graphql";
 import { timeFormatter } from "@/lib/helpers";
-import { ChatMessage as ChatMessageType } from "@/types/typings";
 import clsx from "clsx";
-import React from "react";
+import React, { memo } from "react";
 
-interface IChatMessage extends ChatMessageType {
+interface IChatMessage extends Partial<Message> {
   currentUserId: string;
 }
 
 const ChatMessage: React.FC<IChatMessage> = ({
-  id,
-  message,
-  receiverId,
-  senderId,
-  time,
+  _id,
+  body,
+  createdAt,
+  from,
   currentUserId,
 }) => {
   return (
     <div
-      key={id + receiverId}
+      key={_id}
       className={clsx("chat cursor-default text-dark", {
-        "chat-end": senderId === currentUserId,
-        "chat-start": senderId !== currentUserId,
+        "chat-end": from?._id === currentUserId,
+        "chat-start": from?._id !== currentUserId,
       })}
     >
       <div className="chat-header">
         <time className="text-xs opacity-50 dark:text-secondaryMessage">
-          {timeFormatter(time)}
+          {timeFormatter(createdAt!)}
         </time>
       </div>
       <div className="chat-bubble bg-secondaryMessage dark:bg-darkMessage text-black ">
-        {message}
+        {body}
       </div>
     </div>
   );
 };
 
-export default ChatMessage;
+export default memo(ChatMessage);
