@@ -9,3 +9,20 @@ export const CREATE_NEW_USER = gql`
     }
   }
 `;
+
+export const ADD_NEW_MESSAGE = gql`
+  mutation AddNewMessage($from: ID!, $to: ID!, $body: String!) {
+    addNewMessage(from: $from, to: $to, body: $body) {
+      _id
+      body
+      from {
+        name
+        _id
+      }
+      to {
+        name
+        _id
+      }
+    }
+  }
+`;
