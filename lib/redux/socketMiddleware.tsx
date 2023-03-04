@@ -37,8 +37,6 @@ const chatMiddleware: Middleware = (store) => {
       });
 
       socket.on(ChatEvents.AllUsers, (users: []) => {
-        console.log("onlien user", users);
-
         const newUsers = parseOnlineUsers(users, user.id);
         store.dispatch(socketActions.saveUsers(newUsers));
       });

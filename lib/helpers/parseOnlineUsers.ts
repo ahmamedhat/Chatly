@@ -1,8 +1,6 @@
 const parseUsers = (users: [], uid: string) => {
   const newUsers = users
     .map((user: any) => {
-      console.log("single user", user);
-
       return { ...user, self: user.userID == uid };
     })
     .sort(

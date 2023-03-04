@@ -12,6 +12,8 @@ interface IChatHistory {
 }
 
 const ChatsHistory = ({ currentUser, chats }: IChatHistory) => {
+  // console.log("chat history component");
+
   return (
     <div className="max-w-[50rem] mx-auto mt-4 mb-6">
       <h2 className="font-semibold text-lg mb-4 text-gray-600 dark:text-gray-400">

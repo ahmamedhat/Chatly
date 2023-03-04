@@ -48,7 +48,7 @@ const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
   }, []);
 
   useEffect(() => {
-    chatsState[onlineUserID].length &&
+    chatsState[onlineUserID]?.length &&
       setChatMessages(chatsState[onlineUserID]);
     chatList.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatsState[onlineUserID]]);
