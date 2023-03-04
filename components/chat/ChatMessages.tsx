@@ -50,19 +50,12 @@ const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
   }, []);
 
   useEffect(() => {
-    console.log("entered here 1");
-
-    if (!!chatsState[onlineUserID]?.length) {
+    if (chatsState[onlineUserID]?.length) {
       setChatMessages(chatsState[onlineUserID]);
-      console.log("entered here 2");
-
       if (chatsState[onlineUserID].slice(-1)[0].from._id === onlineUserID) {
-        console.log("entered here 3");
-
-        console.log("lksjfad", chatMessages.slice(-1)[0]._id);
         markAsRead({
           variables: { id: chatsState[onlineUserID].slice(-1)[0]._id },
-        }).then((res) => console.log("seeenn"));
+        });
       }
     }
     chatList.current?.scrollIntoView({ behavior: "smooth" });
