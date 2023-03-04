@@ -1,0 +1,6 @@
+node_modules
+.next
+.storybook
+.vscode
+public
+lib/api/gql
