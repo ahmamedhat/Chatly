@@ -1,8 +1,7 @@
 import moment from "moment";
 
 const timeFormatter = (time: string) => {
-  const myDate = new Date(time);
-  return moment(myDate).format("hh:mm A");
+  return moment.unix(+time / 1000).format("hh:mm A");
 };
 
 export default timeFormatter;
