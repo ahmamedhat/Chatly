@@ -6,6 +6,7 @@ import { socketActions } from "./reducers/socketSlice";
 import { parseOnlineUsers } from "../helpers";
 import { setUser } from "./reducers/userSlice";
 import { Chat, Message } from "../api/gql/graphql";
+import { toast } from "react-hot-toast";
 
 const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -33,6 +34,8 @@ const chatMiddleware: Middleware = (store) => {
 
       socket.on(ChatEvents.ReceiveMessage, (message: Message, uid: string) => {
         if (uid == user.id) uid = message.to._id;
+        toast(`${message.from.name}: ${message.body}`);
+
         store.dispatch(socketActions.receiveMessage({ message, uid }));
       });
 

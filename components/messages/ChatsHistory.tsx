@@ -1,10 +1,14 @@
 "use client";
 
 import { User } from "@/types/typings";
-import React from "react";
+import React, { useEffect } from "react";
 import EmptyMessages from "./EmptyMessages";
 import PersonChat from "./PersonChat";
 import { Chat } from "../../lib/api/gql/graphql";
+import { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/redux/store";
+import { useRouter } from "next/navigation";
 
 interface IChatHistory {
   currentUser: User;
@@ -12,10 +16,16 @@ interface IChatHistory {
 }
 
 const ChatsHistory = ({ currentUser, chats }: IChatHistory) => {
-  // console.log("chat history component");
+  const chatsState = useSelector((store: RootState) => store.socket.chats);
+  const router = useRouter();
+
+  useEffect(() => {
+    router.refresh();
+  }, [chatsState]);
 
   return (
     <div className="max-w-[50rem] mx-auto mt-4 mb-6">
+      <Toaster />
       <h2 className="font-semibold text-lg mb-4 text-gray-600 dark:text-gray-400">
         Chats
       </h2>

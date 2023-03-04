@@ -47,7 +47,6 @@ const SocketSlice = createSlice({
       console.log("chat is", action.payload.chat);
 
       state.chats[action.payload.userID] = action.payload.chat.messages;
-      console.log("state chats now is", state.chats[action.payload.userID]);
 
       return;
     },
