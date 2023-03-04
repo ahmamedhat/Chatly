@@ -1,10 +1,10 @@
+import { Message } from "@/lib/api/gql/graphql";
+
 export type PersonChatMessage = {
-  id: string;
-  message: string;
-  name: string;
+  message: Message;
   time: string;
-  image: string;
-  chatID: number;
+  image?: string;
+  chatID: string;
 };
 
 export type PersonOnlineMessage = {
@@ -16,7 +16,7 @@ export type PersonOnlineMessage = {
 };
 
 export type ChatMessage = {
-  id: number;
+  id: string;
   senderId: string;
   receiverId: string;
   message: string;
