@@ -1,28 +1,24 @@
-import { GoogleSignin, Logout } from "@/components";
+import { AllChats, GoogleSignin, Logout } from "@/components";
 import { IconsSizes } from "@/lib/constants";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { getServerSession, Session } from "next-auth";
-import Link from "next/link";
-import { AiOutlineMessage } from "react-icons/ai";
+import { getServerSession } from "next-auth";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
-    <div className="flex flex-col justify-center h-full items-center">
+    <div className="flex flex-col justify-center h-full items-center mt-12">
       {session ? (
         <div className="h-full w-full flex flex-col justify-start">
-          <div className="flex justify-between mb-14">
-            <div>
+          <div className="flex justify-between mb-14 flex-col">
+            <div className="w-full h-20 border border-t-0 border-b-[0.5px] border-gray-300 dark:border-gray-600 py-2 border-x-0 mb-2">
               <p>Hello {session?.user?.name} 👋🏻</p>
-              <p className="font-thin text-xs text-secondaryMessage">Online</p>
+              <p className="font-thin text-xs text-gray-500 sm:text-sm dark:text-secondaryMessage">
+                Online
+              </p>
             </div>
-            <Link href={"/messages"}>
-              <AiOutlineMessage
-                size={IconsSizes.md}
-                className="stroke-gray-600 dark:stroke-gray-400"
-              />
-            </Link>
           </div>
+          <AllChats />
+          <div className="h-4" />
           <Logout />
         </div>
       ) : (

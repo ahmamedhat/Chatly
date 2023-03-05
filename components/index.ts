@@ -1,6 +1,6 @@
-export { default as Header } from "./header/Header";
 export { default as NavItem } from "./header/NavItem";
 export { default as Drawer } from "./header/Drawer";
+export { default as BusinessTitle } from "./header/BusinessTitle";
 export { default as PersonChat } from "./messages/PersonChat";
 export { default as PersonOnline } from "./messages/PersonOnline";
 export { default as ChatsHistory } from "./messages/ChatsHistory";
@@ -16,5 +16,6 @@ export { default as ChatMain } from "./chat/ChatMessages";
 export { default as BackButton } from "./buttons/Back";
 export { default as Logout } from "./buttons/Logout";
 export { default as GoogleSignin } from "./buttons/GoogleSignin";
+export { default as AllChats } from "./buttons/AllChats";
 export { default as ThemeProvider } from "./theme/Provider";
 export { default as ApolloProvider } from "./apollo/Provider";
