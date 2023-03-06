@@ -7,7 +7,9 @@ export const GET_CHATS = gql`
       createdAt
       updatedAt
       users {
+        _id
         name
+        image
       }
       messages {
         _id
@@ -16,6 +18,7 @@ export const GET_CHATS = gql`
         from {
           name
           _id
+          image
         }
         to {
           name
@@ -53,6 +56,16 @@ export const GET_USERS = gql`
       name
       _id
       email
+    }
+  }
+`;
+
+export const GET_USER = gql`
+  query User($userId: ID!) {
+    user(id: $userId) {
+      _id
+      name
+      image
     }
   }
 `;

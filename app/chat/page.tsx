@@ -1,9 +1,10 @@
 import React from "react";
 import { ChatHeader, ChatMain } from "@/components";
 import client from "@/lib/api/apollo";
-import { GET_CHAT } from "@/lib/api/query";
+import { GET_CHAT, GET_USER } from "@/lib/api/query";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
+import { parseUser } from "@/lib/helpers";
 
 export default async function Chat({
   searchParams,
@@ -12,6 +13,7 @@ export default async function Chat({
 }) {
   const session = await getServerSession(authOptions);
   let chat;
+  let user;
 
   if (searchParams?.chatID) {
     try {
@@ -21,6 +23,18 @@ export default async function Chat({
         fetchPolicy: "no-cache",
       });
       chat = response.data.chat;
+      user = parseUser(chat.users, session.user.id);
+    } catch (e) {
+      console.log("error is", e);
+    }
+  } else {
+    try {
+      const response = await client.query({
+        query: GET_USER,
+        variables: { userId: searchParams?.userID },
+        fetchPolicy: "no-cache",
+      });
+      user = response.data.user;
     } catch (e) {
       console.log("error is", e);
     }
@@ -29,10 +43,7 @@ export default async function Chat({
   return (
     <div className="bg-white dark:bg-dark h-full absolute inset-0">
       <div className="max-w-[60rem] flex flex-col justify-between pb-6 mx-auto h-full ">
-        <ChatHeader
-          userName={searchParams?.username ?? "online user"}
-          userID={searchParams?.userID ?? "0"}
-        />
+        <ChatHeader user={user} />
         <ChatMain
           currentUser={session.user}
           onlineUserID={searchParams?.userID as string}
