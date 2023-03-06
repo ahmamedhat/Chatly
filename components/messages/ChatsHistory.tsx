@@ -26,8 +26,8 @@ const ChatsHistory = ({ currentUser, chats }: IChatHistory) => {
   return (
     <div className="max-w-[50rem] mx-auto mt-4 mb-6">
       <Toaster />
-      <h2 className="font-semibold text-lg mb-4 text-gray-600 dark:text-gray-400">
-        Chats
+      <h2 className="font-semibold text-xl mb-4 text-gray-800 dark:text-gray-300">
+        chats
       </h2>
 
       {!currentUser ? (
@@ -44,6 +44,7 @@ const ChatsHistory = ({ currentUser, chats }: IChatHistory) => {
               time={chat.updatedAt}
               key={chat._id}
               currentUserID={currentUser.id}
+              users={chat.users}
             />
           );
         })

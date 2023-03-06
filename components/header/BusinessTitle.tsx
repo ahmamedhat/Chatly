@@ -10,15 +10,22 @@ const BusinessTitle = () => {
   const currentTheme = theme === "system" ? systemTheme : theme;
 
   return (
-    <div className="flex-1 px-2 mx-2 text-lg pt-1 lg:pt-0">
+    <div className="flex-1">
       <Link href={"/messages"}>
-        <Image
-          src={`/images/logo-${currentTheme == "dark" ? "white" : "dark"}.png`}
-          alt={"chatly"}
-          width={70}
-          height={40}
-          className="duration-300 ease-in-out hover:scale-110"
-        />
+        <div className="px-2 mx-2 text-lg pt-1 lg:pt-0 h-[1.8rem] w-20 relative">
+          <Image
+            src={`/images/logo-${
+              currentTheme == "dark" ? "white" : "dark"
+            }.png`}
+            alt={"chatly"}
+            fill
+            sizes="(max-width: 768px) 415px,
+            (max-width: 1200px) 415px,
+            415px"
+            priority
+            className="duration-300 ease-in-out hover:scale-110 object-contain"
+          />
+        </div>
       </Link>
     </div>
   );

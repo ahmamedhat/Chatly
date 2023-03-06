@@ -39,8 +39,6 @@ const chatMiddleware: Middleware = (store) => {
       });
 
       socket.on(ChatEvents.ReceiveTyping, (uid: string) => {
-        console.log("uid is", uid);
-
         store.dispatch(socketActions.setTyping({ uid, value: true }));
       });
 

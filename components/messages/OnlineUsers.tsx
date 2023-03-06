@@ -33,7 +33,7 @@ const OnlineUsers = ({ currentUser }: IOnlineUsers) => {
 
   return (
     <div className="max-w-[50rem] mx-auto mt-4 mb-6">
-      <h2 className="font-semibold text-lg mb-4 text-gray-600 dark:text-gray-400">
+      <h2 className="font-semibold text-lg mb-4 text-gray-800 dark:text-gray-300">
         Online
       </h2>
 
