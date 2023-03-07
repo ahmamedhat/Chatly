@@ -1,3 +1,4 @@
+import React from "react";
 import { ApolloProvider, Drawer, ThemeProvider } from "@/components";
 import "./globals.css";
 import "react-loading-skeleton/dist/skeleton.css";

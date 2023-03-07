@@ -1,8 +1,14 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "types": ["react/next"],
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": [
+      "react/next"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,9 +28,15 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@ui/components/*": ["./components/index"],
-      "@ui/icons/*": ["./assets/icons/index"]
+      "@/*": [
+        "./*"
+      ],
+      "@ui/components/*": [
+        "./components/index"
+      ],
+      "@ui/icons/*": [
+        "./assets/icons/index"
+      ]
     }
   },
   "include": [
@@ -32,7 +44,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "middleware.ts"
+    "middleware.ts",
+    "/Users/ahmadmedhat/Documents/NextJs/nextjs13-chat-app/.next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
