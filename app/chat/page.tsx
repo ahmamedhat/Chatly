@@ -6,6 +6,11 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import { parseUser } from "@/lib/helpers";
 
+export const metadata = {
+  title: "Chat",
+  description: "Users Chat",
+};
+
 export default async function Chat({
   searchParams,
 }: {
@@ -28,7 +33,6 @@ export default async function Chat({
         const response = await client.query({
           query: GET_CHAT,
           variables: { chatId: searchParams?.chatID },
-          fetchPolicy: "no-cache",
         });
         chat = response.data.chat;
         otherUser = parseUser(chat.users, session?.user?.id);
@@ -41,7 +45,6 @@ export default async function Chat({
         const response = await client.query({
           query: GET_USER,
           variables: { userId: searchParams?.userID },
-          fetchPolicy: "no-cache",
         });
         otherUser = response.data.user;
       } catch (e) {

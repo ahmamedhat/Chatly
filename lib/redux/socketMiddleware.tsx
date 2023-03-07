@@ -28,6 +28,10 @@ const chatMiddleware: Middleware = (store) => {
         socket.emit(ChatEvents.RequestAllMessages);
       });
 
+      socket.on("connect_failed", () => {
+        throw new Error("Error connecting to chat server!");
+      });
+
       socket.on(ChatEvents.SendAllMessages, (chat: Chat, userID: string) => {
         store.dispatch(socketActions.receiveAllMessages({ userID, chat }));
       });

@@ -4,6 +4,13 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import client from "@/lib/api/apollo";
 
+export const metadata = {
+  title: "Messages",
+  description: "All your old messages and online users are shown here",
+};
+
+export const dynamic = "force-dynamic";
+
 export default async function Messages() {
   let session;
   let chats;

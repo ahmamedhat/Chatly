@@ -1,15 +1,10 @@
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
-import { getServerSession } from "next-auth";
+export const metadata = {
+  title: "About",
+  description:
+    "What is chatly, the story behind the most successfull online chat platform",
+};
 
 export default async function About() {
-  let session;
-  try {
-    session = await getServerSession(authOptions);
-  } catch (e) {
-    console.error("session error", e);
-    throw new Error("error getting user session");
-  }
-
   return (
     <div className="h-full">
       <p className="text-gray-400 mb-6">About</p>

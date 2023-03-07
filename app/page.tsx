@@ -2,6 +2,11 @@ import { AllChats, GoogleSignin, Logout } from "@/components";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 
+export const metadata = {
+  title: "Account",
+  description: "You can manage your account here",
+};
+
 export default async function Home() {
   let session;
   try {
