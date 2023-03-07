@@ -19,6 +19,7 @@ export default async function Chat({
     session = await getServerSession(authOptions);
   } catch (e) {
     console.error("session error", e);
+    throw new Error("error getting user session");
   }
 
   if (session?.user) {
@@ -33,6 +34,7 @@ export default async function Chat({
         otherUser = parseUser(chat.users, session?.user?.id);
       } catch (e) {
         console.log("error is", e);
+        throw new Error("error getting user chat");
       }
     } else {
       try {
@@ -44,6 +46,7 @@ export default async function Chat({
         otherUser = response.data.user;
       } catch (e) {
         console.log("error is", e);
+        throw new Error("error getting user info");
       }
     }
   }

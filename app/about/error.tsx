@@ -16,7 +16,7 @@ export default function Error({
 
   return (
     <div className="flex flex-col justify-center h-full">
-      <h2>Oops, Something went wrong accessing account!</h2>
+      <h2>Oops, Something went wrong accessing about!</h2>
       <button
         className="btn btn-primary mt-2"
         onClick={

@@ -5,16 +5,27 @@ import { getServerSession } from "next-auth";
 import client from "@/lib/api/apollo";
 
 export default async function Messages() {
-  const session = await getServerSession(authOptions);
+  let session;
   let chats;
 
+  try {
+    session = await getServerSession(authOptions);
+  } catch (e) {
+    console.error("session error", e);
+    throw new Error("error getting user session");
+  }
+
   if (session?.user) {
-    const response = await client.query({
-      query: GET_CHATS,
-      variables: { userId: session?.user?.id },
-      fetchPolicy: "no-cache",
-    });
-    chats = response.data.chats;
+    try {
+      const response = await client.query({
+        query: GET_CHATS,
+        variables: { userId: session?.user?.id },
+        fetchPolicy: "no-cache",
+      });
+      chats = response.data.chats;
+    } catch (e) {
+      throw new Error("error getting chats");
+    }
   }
   return (
     <div className="h-full">

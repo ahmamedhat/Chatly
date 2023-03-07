@@ -7,6 +7,7 @@ export default async function About() {
     session = await getServerSession(authOptions);
   } catch (e) {
     console.error("session error", e);
+    throw new Error("error getting user session");
   }
 
   return (
