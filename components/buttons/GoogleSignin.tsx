@@ -20,7 +20,7 @@ const GoogleSignin: React.FC<IGoogleSigin> = ({ className, ...props }) => {
     <button
       onClick={onSignin}
       className={clsx(
-        "normal-case btn gap-2 flex mx-auto bg-white dark:bg-dark text-black dark:text-secondaryMessage font-light hover:text-white",
+        "normal-case btn gap-2 flex mx-auto bg-white dark:bg-dark text-black dark:text-secondaryMessage font-light hover:bg-white hover:text-black md:hover:bg-black md:hover:text-white",
         className,
         { loading }
       )}

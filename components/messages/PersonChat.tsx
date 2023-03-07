@@ -46,7 +46,7 @@ const PersonChat: React.FC<IPersonChatMessage> = ({
           "w-full relative h-20 border border-t-0 border-b-[0.5px] border-gray-200 dark:border-gray-700 py-2 border-x-0 flex items-center rounded-md mb-2"
         )}
       >
-        {!message.read && (
+        {!message.read && message.from._id !== currentUserID && (
           <div className="bg-red-500 rounded-full w-3 h-3 absolute right-0 top-0" />
         )}
         <div className="w-[20%] max-w-[55px] items-center flex justify-center mr-2">
@@ -68,16 +68,20 @@ const PersonChat: React.FC<IPersonChatMessage> = ({
           <div className="flex justify-between items-center mb-1">
             <p
               className={clsx("truncate", {
-                "text-dark dark:text-white font-bold": !message.read,
-                "text-gray-700 dark:text-gray-300 font-medium": message.read,
+                "text-dark dark:text-white font-bold":
+                  !message.read && message.from._id !== currentUserID,
+                "text-gray-700 dark:text-gray-300 font-medium":
+                  message.read && message.from._id !== currentUserID,
               })}
             >
               {otherUser?.name}
             </p>
             <p
               className={clsx("text-xs truncate", {
-                "text-gray-800 dark:text-gray-300 font-medium": !message.read,
-                "font-regular text-gray-400 dark:text-gray-400": message.read,
+                "text-gray-800 dark:text-gray-300 font-medium":
+                  !message.read && message.from._id !== currentUserID,
+                "font-regular text-gray-400 dark:text-gray-400":
+                  message.read && message.from._id !== currentUserID,
               })}
             >
               {chatTimeFormatter(time)}
@@ -86,8 +90,10 @@ const PersonChat: React.FC<IPersonChatMessage> = ({
           <div className="flex justify-between">
             <p
               className={clsx("truncate", {
-                "text-gray-800 dark:text-gray-300 font-medium": !message.read,
-                "font-regular text-gray-400 dark:text-gray-400": message.read,
+                "text-gray-800 dark:text-gray-300 font-medium":
+                  !message.read && message.from._id !== currentUserID,
+                "font-regular text-gray-400 dark:text-gray-400":
+                  message.read && message.from._id !== currentUserID,
               })}
             >
               {message.body}
