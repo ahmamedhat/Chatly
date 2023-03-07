@@ -2,7 +2,12 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 
 export default async function About() {
-  const _session = await getServerSession(authOptions);
+  let session;
+  try {
+    session = await getServerSession(authOptions);
+  } catch (e) {
+    console.error("session error", e);
+  }
 
   return (
     <div className="h-full">

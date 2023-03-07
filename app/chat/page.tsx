@@ -11,9 +11,15 @@ export default async function Chat({
 }: {
   searchParams?: { [key: string]: string | undefined };
 }) {
-  const session = await getServerSession(authOptions);
+  let session;
   let chat;
   let otherUser;
+
+  try {
+    session = await getServerSession(authOptions);
+  } catch (e) {
+    console.error("session error", e);
+  }
 
   if (session?.user) {
     if (searchParams?.chatID) {

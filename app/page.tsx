@@ -3,7 +3,12 @@ import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
+  let session;
+  try {
+    session = await getServerSession(authOptions);
+  } catch (e) {
+    console.error("session error", e);
+  }
   return (
     <div className="flex flex-col justify-center h-full items-center mt-12">
       {session ? (
