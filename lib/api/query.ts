@@ -33,6 +33,7 @@ export const GET_CHAT = gql`
   query Chat($chatId: ID!) {
     chat(id: $chatId) {
       users {
+        _id
         name
       }
       messages {

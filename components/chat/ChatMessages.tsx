@@ -17,7 +17,6 @@ import moment from "moment";
 interface IChatMessages {
   currentUser: User;
   onlineUserID: string;
-  chatID?: string;
   chat?: Chat;
 }
 
