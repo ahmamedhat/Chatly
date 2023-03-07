@@ -13,7 +13,7 @@ export default async function Chat({
 }) {
   const session = await getServerSession(authOptions);
   let chat;
-  let user;
+  let otherUser;
 
   if (session?.user) {
     if (searchParams?.chatID) {
@@ -24,7 +24,7 @@ export default async function Chat({
           fetchPolicy: "no-cache",
         });
         chat = response.data.chat;
-        user = parseUser(chat.users, session?.user?.id);
+        otherUser = parseUser(chat.users, session?.user?.id);
       } catch (e) {
         console.log("error is", e);
       }
@@ -35,7 +35,7 @@ export default async function Chat({
           variables: { userId: searchParams?.userID },
           fetchPolicy: "no-cache",
         });
-        user = response.data.user;
+        otherUser = response.data.user;
       } catch (e) {
         console.log("error is", e);
       }
@@ -46,7 +46,7 @@ export default async function Chat({
     <div className="bg-white dark:bg-dark h-full absolute inset-0">
       {session?.user && (
         <div className="max-w-[60rem] flex flex-col justify-between pb-6 mx-auto h-full ">
-          <ChatHeader user={user} />
+          <ChatHeader user={otherUser} />
           <ChatMain
             currentUser={session?.user}
             onlineUserID={searchParams?.userID as string}

@@ -11,8 +11,8 @@ import { RootState } from "@/lib/redux/store";
 import { useRouter } from "next/navigation";
 
 interface IChatHistory {
-  currentUser: User;
-  chats: Chat[];
+  currentUser?: User;
+  chats?: Chat[];
 }
 
 const ChatsHistory = ({ currentUser, chats }: IChatHistory) => {
@@ -35,8 +35,8 @@ const ChatsHistory = ({ currentUser, chats }: IChatHistory) => {
           title="You're not signed in yet"
           descriptipon="Sign in to start chatting with online users!"
         />
-      ) : chats.length > 0 ? (
-        chats.map((chat: Chat) => {
+      ) : chats && chats?.length > 0 ? (
+        chats?.map((chat: Chat) => {
           return (
             <PersonChat
               chatID={chat._id}

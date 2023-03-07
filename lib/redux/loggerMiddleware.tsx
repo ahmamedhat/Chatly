@@ -1,6 +1,6 @@
 import { Middleware } from "redux";
 
-const loggerMiddleware: Middleware = (store) => {
+const loggerMiddleware: Middleware = (_store) => {
   return (next) => {
     return (action) => {
       const result = next(action);

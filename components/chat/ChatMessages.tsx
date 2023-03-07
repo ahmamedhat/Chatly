@@ -32,7 +32,7 @@ const ChatMessages = ({ currentUser, onlineUserID, chat }: IChatMessages) => {
   const [markAsRead] = useMutation(MARK_MESSAGE_AS_READ);
 
   useEffect(() => {
-    if (chat?.messages) {
+    if (chat && chat?.messages.length > 0) {
       dispatch(
         socketActions.receiveAllMessages({
           userID: onlineUserID,

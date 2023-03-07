@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 interface IOnlineUsers {
-  currentUser: User;
+  currentUser?: User;
 }
 
 const OnlineUsers = ({ currentUser }: IOnlineUsers) => {
