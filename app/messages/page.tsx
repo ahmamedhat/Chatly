@@ -9,8 +9,6 @@ export const metadata = {
   description: "All your old messages and online users are shown here",
 };
 
-export const dynamic = "force-dynamic";
-
 export default async function Messages() {
   let session;
   let chats;
