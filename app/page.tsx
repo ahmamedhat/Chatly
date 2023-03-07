@@ -1,5 +1,4 @@
 import { AllChats, GoogleSignin, Logout } from "@/components";
-import { IconsSizes } from "@/lib/constants";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 

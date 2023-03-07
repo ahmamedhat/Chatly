@@ -4,3 +4,4 @@ node_modules
 dist
 .yarn
 /lib/api/gql
+tsconfig.json

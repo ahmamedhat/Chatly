@@ -8,7 +8,6 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        mono: ["var(--font-inter)"],
         poppins: ["var(--font-poppins)"],
       },
       screens: {
