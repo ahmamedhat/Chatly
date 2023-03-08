@@ -21,7 +21,10 @@ export default function Error({
         className="btn btn-primary mt-2"
         onClick={
           // Attempt to recover by trying to re-render the segment
-          () => reset()
+          () => {
+            reset();
+            window.location.reload();
+          }
         }
       >
         Try again

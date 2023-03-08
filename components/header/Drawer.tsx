@@ -27,7 +27,11 @@ const Drawer: React.FC<IDrawer> = ({ children }) => {
               {chatConfig.map((navItem: ChatConfig) => {
                 return (
                   <li className="rounded-lg" key={navItem.href}>
-                    <Link href={navItem.href} className="rounded-lg">
+                    <Link
+                      href={navItem.href}
+                      as={`${navItem.href}`}
+                      className="rounded-lg"
+                    >
                       <p className="text-sm font-light">{navItem.title}</p>
                     </Link>
                   </li>

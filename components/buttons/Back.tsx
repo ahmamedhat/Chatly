@@ -9,7 +9,7 @@ interface IBackButton {
 
 const BackButton: React.FC<IBackButton> = ({ href }) => {
   return (
-    <Link href={href ?? "/"}>
+    <Link href={href ?? "/"} as={`${href}`}>
       <IoArrowBack
         size={IconsSizes.lg}
         className="fill-dark dark:fill-secondaryMessage"

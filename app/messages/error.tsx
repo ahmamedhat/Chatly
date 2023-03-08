@@ -11,7 +11,7 @@ export default function Error({
 }) {
   useEffect(() => {
     // Log the error to an error reporting service
-    console.error(error);
+    console.error("error messages here is", error);
   }, [error]);
 
   return (
@@ -21,7 +21,10 @@ export default function Error({
         className="btn btn-primary mt-2"
         onClick={
           // Attempt to recover by trying to re-render the segment
-          () => reset()
+          () => {
+            reset();
+            window.location.reload();
+          }
         }
       >
         Try again

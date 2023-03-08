@@ -11,6 +11,8 @@ export const metadata = {
   description: "Users Chat",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function Chat({
   searchParams,
 }: {

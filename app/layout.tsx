@@ -12,8 +12,6 @@ const poppins = Poppins({
   display: "swap",
 });
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: {
     default: "Chatly",

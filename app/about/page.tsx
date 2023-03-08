@@ -4,6 +4,8 @@ export const metadata = {
     "What is chatly, the story behind the most successfull online chat platform",
 };
 
+export const dynamic = "force-static";
+
 export default async function About() {
   return (
     <div className="h-full">

@@ -23,7 +23,7 @@ export const authOptions = {
     },
   },
   session: {
-    maxAge: 7 * 24 * 60 * 60,
+    maxAge: 2 * 24 * 60 * 60,
   },
 };
 

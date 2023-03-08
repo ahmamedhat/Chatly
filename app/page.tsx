@@ -7,6 +7,8 @@ export const metadata = {
   description: "You can manage your account here",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   let session;
   try {
