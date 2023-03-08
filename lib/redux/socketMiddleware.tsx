@@ -20,7 +20,10 @@ const chatMiddleware: Middleware = (store) => {
     if (socketActions.startConnecting.match(action)) {
       if (!isConnectionEstablished) {
         store.dispatch(setUser(action.payload));
-        socket = io(apiURL as string, { autoConnect: false });
+        socket = io(apiURL as string, {
+          autoConnect: false,
+          transports: ["polling", "flashsocket"],
+        });
       }
 
       socket.on("connect", () => {
