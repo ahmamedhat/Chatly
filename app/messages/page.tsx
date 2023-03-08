@@ -34,7 +34,7 @@ export default async function Messages() {
       const response = await client.query({
         query: GET_CHATS,
         variables: { userId: session?.user?.id },
-        fetchPolicy: "network-only",
+        fetchPolicy: "no-cache",
       });
       chats = response.data.chats;
     } catch (e) {

@@ -35,7 +35,7 @@ export default async function Chat({
         const response = await client.query({
           query: GET_CHAT,
           variables: { chatId: searchParams?.chatID },
-          fetchPolicy: "network-only",
+          fetchPolicy: "no-cache",
         });
         chat = response.data.chat;
         otherUser = parseUser(chat.users, session?.user?.id);
