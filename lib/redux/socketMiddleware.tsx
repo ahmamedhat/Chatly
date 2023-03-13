@@ -8,7 +8,7 @@ import { setUser } from "./reducers/userSlice";
 import { Chat, Message } from "../api/gql/graphql";
 import { toast } from "react-hot-toast";
 
-const apiURL = process.env.NEXT_PUBLIC_API_URL;
+const apiURL = process.env.NEXT_PUBLIC_SOCKET_SERVER_URL;
 
 const chatMiddleware: Middleware = (store) => {
   let socket: Socket;
